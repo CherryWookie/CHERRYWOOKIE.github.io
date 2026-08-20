@@ -361,10 +361,74 @@
       </div>
     </div>
 
+    <!-- CORTISOL SENSOR -->
+    <div class="proj-card" id="card-cortisol">
+      <div class="proj-trigger" onclick="toggle('cortisol')">
+        <div class="proj-index">02</div>
+        <div>
+          <div class="proj-name">Cortisol Biosensor — MSc Thesis</div>
+          <p class="proj-summary">Designed and fabricated a molecularly imprinted polymer (MIP) based electrochemical biosensor for non-invasive cortisol detection in sweat and saliva. Validated across sensitivity, selectivity, and 23-day stability. Led to a first-author publication in Microchemical Journal (Elsevier, 2026).</p>
+          <div class="proj-tags-row">
+            <span class="ptag">Electrochemistry</span><span class="ptag">MIP Synthesis</span><span class="ptag">Cyclic Voltammetry</span>
+            <span class="ptag">Biosensing</span><span class="ptag">PalmSens4</span><span class="ptag">Published</span>
+          </div>
+        </div>
+        <div class="proj-toggle">+</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-body-inner">
+
+          <div class="sub-label">Overview</div>
+          <p class="body-text">Cortisol is the primary biomarker of physiological stress and plays a central role in metabolic regulation, immune function, and circadian rhythm. Accurate real-time detection without invasive blood draws remains an unsolved clinical challenge. This project developed a molecularly imprinted polymer (MIP) based sensor on screen-printed carbon electrodes (SPCEs) that detects cortisol electrochemically from sweat or saliva at concentrations spanning 100 pM to 1 µM — a range clinically relevant to stress monitoring.</p>
+
+          <div class="img-row">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/cortisol/PXL_20250612_131430196_NIGHT.jpg" alt="Sensor electropolymerization in solution" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/cortisol/ox_submerged.jpg" alt="SPCE sensor submerged in electrolyte solution" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/cortisol/PXL_20250606_122011973.jpg" alt="Electrochemical measurement setup with PalmSens4" onclick="openLb(this)">
+          </div>
+
+          <div class="sub-label">Sensor Design and Fabrication</div>
+          <p class="body-text">The sensor uses electropolymerization of polypyrrole on screen-printed carbon electrodes to create a molecularly imprinted recognition layer selective to cortisol. Cortisol molecules are embedded during polymerization and removed via overoxidation, leaving complementary cavities that selectively rebind cortisol from solution. Cyclic voltammetry (CV) and differential pulse voltammetry (DPV) were used for electrochemical characterization. All fabrication and testing was performed in the MNT Group laboratory at UPC Barcelona.</p>
+
+          <div class="img-row">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/cortisol/spce_diagram.png" alt="Screen-printed carbon electrode diagram" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/cortisol/IMG-20250507-WA0023.jpg" alt="Close-up of SPCE working electrode surface" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/cortisol/ox_bubbles.jpg" alt="Overoxidation process with visible bubbling" onclick="openLb(this)">
+          </div>
+
+          <div class="sub-label">Results</div>
+          <p class="body-text">The calibration curve achieved R²=0.992 across a 100 pM to 1 µM cortisol range with a logarithmic fit, confirming consistent sensor response across the clinically relevant detection window. Selectivity testing against structurally similar interferents — lactate, prednisolone, and progesterone — demonstrated that lactate produced negligible cross-response while steroid interferents showed measurable but distinguishable signals. SEM imaging confirmed distinct surface morphology differences between bare electrodes, NIP controls, and MIP-coated sensors.</p>
+
+          <div class="img-row">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/cortisol/cal_curve_log.png" alt="Calibration curve log scale R²=0.992" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/cortisol/cv_peaks_bl_sub_.png" alt="CV baseline-subtracted oxidation peaks by concentration" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/cortisol/selectivity39.png" alt="Selectivity analysis sensor 39" onclick="openLb(this)">
+          </div>
+
+          <div class="img-row">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/cortisol/sem2.png" alt="SEM imaging MIP vs NIP electrode surfaces" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/cortisol/PXL_20250612_125504519.jpg" alt="Cortisol solution in lab vial" onclick="openLb(this)">
+          </div>
+
+          <div class="sub-label">Specifications</div>
+          <table class="spec-table">
+            <tr><td>Recognition Element</td><td>Molecularly imprinted polypyrrole (MIP) — electropolymerized on SPCE</td></tr>
+            <tr><td>Detection Method</td><td>Cyclic Voltammetry (CV) and Differential Pulse Voltammetry (DPV)</td></tr>
+            <tr><td>Detection Range</td><td>100 pM – 1 µM cortisol in aqueous buffer</td></tr>
+            <tr><td>Calibration Fit</td><td>Logarithmic — y = -3.019ln(x) + 337.5, R² = 0.992</td></tr>
+            <tr><td>Instrument</td><td>PalmSens4 portable potentiostat</td></tr>
+            <tr><td>Electrode</td><td>Metrohm DropSens SPCE — carbon WE, carbon CE, Ag/AgCl RE</td></tr>
+            <tr><td>Publication</td><td>Microchemical Journal, 224, 117804 — Elsevier (2026)</td></tr>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
     <!-- PIV -->
     <div class="proj-card" id="card-piv">
       <div class="proj-trigger" onclick="toggle('piv')">
-        <div class="proj-index">02</div>
+        <div class="proj-index">06</div>
         <div>
           <div class="proj-name">PIV Fluid Dynamics Research</div>
           <p class="proj-summary">Designed and built a complete Particle Image Velocimetry system from scratch to study laminar-to-turbulent flow transition. Validated against two independent theoretical benchmarks: Torricelli's Law (R²=0.958) and projectile motion theory (R²=0.985).</p>
@@ -432,7 +496,7 @@
     <!-- ROBOT -->
     <div class="proj-card" id="card-slb">
       <div class="proj-trigger" onclick="toggle('slb')">
-        <div class="proj-index">03</div>
+        <div class="proj-index">06</div>
         <div>
           <div class="proj-name">Self-Balancing Robot</div>
           <p class="proj-summary">Two-wheeled inverted pendulum robot built from scratch — laser-cut chassis, 3D-printed wheels, NEMA 17 steppers, and a Kalman-filtered PID loop on Arduino. Achieved stable balance after three full redesigns and systematic resolution of cascading hardware and firmware failures.</p>
@@ -479,7 +543,7 @@
     <!-- QUADCOPTER -->
     <div class="proj-card" id="card-quad">
       <div class="proj-trigger" onclick="toggle('quad')">
-        <div class="proj-index">04</div>
+        <div class="proj-index">06</div>
         <div>
           <div class="proj-name">Quadcopter UAV</div>
           <p class="proj-summary">Custom quadcopter built from components across mechanical, electrical, and firmware layers. Resolved layered hardware, RF interference, and firmware failures. Built a Python WiFi telemetry console for real-time in-flight PID tuning.</p>
@@ -524,7 +588,7 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
     <!-- RUBENS TUBE -->
     <div class="proj-card" id="card-rubens">
       <div class="proj-trigger" onclick="toggle('rubens')">
-        <div class="proj-index">05</div>
+        <div class="proj-index">06</div>
         <div>
           <div class="proj-name">Rubens' Tube</div>
           <p class="proj-summary">Designed and fabricated a standing wave visualization apparatus from scratch. Applied fluid dynamics principles to achieve stable, repeatable flame patterns deployable across multiple resonant frequency modes — built as a lecture demonstration tool.</p>
