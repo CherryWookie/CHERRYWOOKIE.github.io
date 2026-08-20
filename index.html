@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michael Sell</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #F5F2EE;
+    --surface:  #EDEAE5;
+    --ink:      #1C1A18;
+    --mid:      #5C5650;
+    --light:    #9C958D;
+    --rule:     #D8D2CA;
+    --accent:   #B8622A;
+    --accent2:  #7A5C3A;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 400; line-height: 1.6; overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 48px;
+    background: rgba(245,242,238,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-logo {
+    font-family: 'DM Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem; letter-spacing: 0.06em; color: var(--mid);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 0 48px 80px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 20px;
+    opacity: 0; animation: up 0.7s 0.2s forwards;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3.8rem, 7.5vw, 7.5rem);
+    line-height: 0.95; letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    opacity: 0; animation: up 0.8s 0.35s forwards;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-bio {
+    max-width: 520px; font-size: 1rem; color: var(--mid);
+    line-height: 1.75; margin-bottom: 32px;
+    opacity: 0; animation: up 0.8s 0.5s forwards;
+  }
+  .hero-meta {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    opacity: 0; animation: up 0.8s 0.65s forwards;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-label {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--light);
+  }
+  .meta-value { font-size: 0.85rem; color: var(--ink); }
+  .hero-scroll {
+    position: absolute; bottom: 32px; right: 48px;
+    font-family: 'DM Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--light);
+    display: flex; align-items: center; gap: 8px;
+    opacity: 0; animation: up 0.8s 1.1s forwards;
+  }
+  .hero-scroll::before {
+    content: ''; width: 1px; height: 36px;
+    background: linear-gradient(to bottom, transparent, var(--rule));
+  }
+  @keyframes up {
+    from { opacity:0; transform: translateY(18px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── SECTION SHELL ── */
+  .section { padding: 96px 48px; }
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace; font-size: 0.64rem;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: 10px; display: flex; align-items: center; gap: 14px;
+  }
+  .section-eyebrow::after { content: ''; width: 40px; height: 1px; background: var(--accent); opacity: 0.5; }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.05;
+    letter-spacing: -0.015em; margin-bottom: 52px;
+  }
+  .section-title em { font-style: italic; color: var(--mid); }
+  .h-rule { height: 1px; background: var(--rule); margin: 0; }
+
+  /* ── PROJECT CARDS ── */
+  .projects-stack { display: flex; flex-direction: column; }
+  .proj-card {
+    border-top: 1px solid var(--rule);
+    overflow: hidden;
+  }
+  .proj-card:last-child { border-bottom: 1px solid var(--rule); }
+  .proj-trigger {
+    padding: 28px 0; display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 0 24px; align-items: start; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .proj-trigger:hover { opacity: 0.75; }
+  .proj-index {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem;
+    color: var(--light); letter-spacing: 0.08em; padding-top: 4px;
+  }
+  .proj-name {
+    font-family: 'DM Serif Display', serif; font-size: 1.55rem;
+    line-height: 1.1; margin-bottom: 6px;
+  }
+  .proj-summary { font-size: 0.85rem; color: var(--mid); max-width: 580px; line-height: 1.65; margin-bottom: 10px; }
+  .proj-tags-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ptag {
+    font-family: 'DM Mono', monospace; font-size: 0.56rem;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    padding: 3px 9px; border: 1px solid var(--rule);
+    color: var(--light); border-radius: 2px;
+  }
+  .proj-toggle {
+    width: 32px; height: 32px; border: 1px solid var(--rule);
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; color: var(--mid); font-size: 1.2rem;
+    flex-shrink: 0; transition: all 0.25s; margin-top: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+  .proj-card.open .proj-toggle { border-color: var(--accent); color: var(--accent); transform: rotate(45deg); }
+
+  /* ── PROJECT BODY ── */
+  .proj-body { max-height: 0; overflow: hidden; transition: max-height 0.65s cubic-bezier(0.16,1,0.3,1); }
+  .proj-card.open .proj-body { max-height: 9999px; }
+  .proj-body-inner { padding: 0 0 48px 84px; }
+
+  .sub-label {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-top: 28px; margin-bottom: 10px;
+  }
+  .body-text { font-size: 0.88rem; color: var(--mid); line-height: 1.75; margin-bottom: 12px; }
+  .bullet-list { list-style: none; padding: 0; margin-bottom: 12px; }
+  .bullet-list li { font-size: 0.88rem; color: var(--mid); line-height: 1.7; padding: 2px 0 2px 18px; position: relative; }
+  .bullet-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.8rem; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin: 20px 0; }
+
+  .spec-table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; font-size: 0.82rem; }
+  .spec-table tr { border-bottom: 1px solid var(--rule); }
+  .spec-table tr:last-child { border-bottom: none; }
+  .spec-table td { padding: 8px 0; vertical-align: top; }
+  .spec-table td:first-child { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--light); width: 34%; padding-right: 14px; padding-top: 10px; }
+
+  .code-block {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent); border-radius: 3px;
+    padding: 16px 20px; margin: 12px 0; overflow-x: auto;
+  }
+  .code-block pre { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--mid); line-height: 1.8; white-space: pre; }
+
+  .gh-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'DM Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink); text-decoration: none;
+    border: 1px solid var(--rule); padding: 10px 18px;
+    border-radius: 3px; margin-top: 20px; transition: all 0.2s;
+  }
+  .gh-link:hover { border-color: var(--accent); color: var(--accent); }
+  .gh-link svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+
+  /* ── IMAGE GALLERY ── */
+  .img-row { display: flex; gap: 8px; margin: 16px 0; }
+  .img-row img { flex: 1; min-width: 0; object-fit: cover; border-radius: 3px; cursor: zoom-in; aspect-ratio: 4/3; }
+  .img-row img.tall { aspect-ratio: 3/4; }
+  .img-row img.wide { aspect-ratio: 16/9; }
+  .img-single img { width: 100%; max-height: 420px; object-fit: cover; border-radius: 3px; cursor: zoom-in; }
+
+  /* ── PHOTO DIVIDER ── */
+  .photo-divider {
+    height: 60vh; position: relative; overflow: hidden;
+  }
+  .photo-divider img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(0.85);
+  }
+  .photo-divider-caption {
+    position: absolute; bottom: 24px; right: 32px;
+    font-family: 'DM Mono', monospace; font-size: 0.58rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* ── PHOTOGRAPHY SECTION ── */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .photo-grid .photo-item { overflow: hidden; cursor: zoom-in; }
+  .photo-grid .photo-item img {
+    width: 100%; height: 260px; object-fit: cover;
+    transition: transform 0.4s ease; display: block;
+  }
+  .photo-grid .photo-item:hover img { transform: scale(1.03); }
+  .photo-grid .photo-item.tall img { height: 380px; }
+  .photo-grid .photo-item.wide {
+    grid-column: span 2;
+  }
+  .photo-grid .photo-item.wide img { height: 260px; }
+  .photo-caption {
+    font-family: 'DM Mono', monospace; font-size: 0.58rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--light); margin-top: 4px;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .skill-cell { background: var(--bg); padding: 24px; }
+  .skill-cell h3 { font-size: 0.85rem; font-weight: 500; margin-bottom: 6px; }
+  .skill-cell p { font-size: 0.78rem; color: var(--mid); line-height: 1.65; }
+
+  /* ── ABOUT ── */
+  .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: start; }
+  .about-text p { font-size: 0.95rem; color: var(--mid); line-height: 1.8; margin-bottom: 16px; }
+  .about-facts { display: flex; flex-direction: column; gap: 20px; }
+  .fact-item { border-top: 1px solid var(--rule); padding-top: 16px; }
+  .fact-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--light); margin-bottom: 4px; }
+  .fact-value { font-size: 0.88rem; color: var(--ink); line-height: 1.5; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 48px; border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-size: 0.78rem; color: var(--light); }
+  footer a { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); text-decoration: none; }
+
+  /* ── LIGHTBOX ── */
+  #lb { display: none; position: fixed; inset: 0; background: rgba(28,26,24,0.95); z-index: 999; align-items: center; justify-content: center; cursor: zoom-out; }
+  #lb.active { display: flex; }
+  #lb img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+
+  /* ── REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Michael Sell</a>
+  <ul class="nav-links">
+    <li><a href="#engineering">Engineering</a></li>
+    <li><a href="#photography">Photography</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="https://github.com/CherryWookie" target="_blank">GitHub</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="position:relative;">
+  <div class="hero-eyebrow">Engineering Physics · MSc · Published Researcher</div>
+  <h1>Michael<br><em>Sell</em></h1>
+  <p class="hero-bio">Physicist who builds things — from rocket gimbal systems and fluid dynamics instrumentation to autonomous robots and custom furniture. Full lifecycle: concept, design, fabricate, validate.</p>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <span class="meta-label">Education</span>
+      <span class="meta-value">MSc Engineering Physics, UPC Barcelona</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Publication</span>
+      <span class="meta-value">Microchemical Journal · Elsevier (2026)</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Based</span>
+      <span class="meta-value">Midwest, USA · Open to relocation</span>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<div class="h-rule"></div>
+
+<!-- ═══════════════════════════════════════ ENGINEERING ══ -->
+<section class="section" id="engineering">
+  <div class="section-eyebrow">Engineering Projects</div>
+  <h2 class="section-title">Built from<br><em>first principles</em></h2>
+
+  <div class="projects-stack reveal">
+
+    <!-- TVC -->
+    <div class="proj-card" id="card-tvc">
+      <div class="proj-trigger" onclick="toggle('tvc')">
+        <div class="proj-index">01</div>
+        <div>
+          <div class="proj-name">TVC Demonstrator</div>
+          <p class="proj-summary">A scaled thrust vector control system designed from blank sheet — 2-DOF gimbal mechanism, custom PCB, servo actuation, and closed-loop IMU feedback. Diagnosed gravitationally induced sensor error and derived a physics-based correction.</p>
+          <div class="proj-tags-row">
+            <span class="ptag">Onshape CAD</span><span class="ptag">PCB Design</span><span class="ptag">ESP32</span>
+            <span class="ptag">PID Control</span><span class="ptag">IMU Fusion</span><span class="ptag">Servo Actuation</span>
+          </div>
+        </div>
+        <div class="proj-toggle">+</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-body-inner">
+
+          <div class="sub-label">Overview</div>
+          <p class="body-text">The TVC Demonstrator is a self-directed project modeling the core mechanism behind rocket engine steering — a two-degree-of-freedom gimbal that redirects thrust to control attitude. The entire system was designed from scratch with no pre-existing template: mechanism geometry derived analytically, PCB laid out in EasyEDA, firmware written for ESP32, and all structural components fabricated by hand.</p>
+
+          <div class="img-row">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/tvc_notebook_1.jpeg" alt="Initial concept sketches" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/tvc_notebook_3.jpeg" alt="Gimbal geometry calculations" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/Screenshot_20260714_235534.png" alt="Onshape CAD model" onclick="openLb(this)">
+          </div>
+
+          <div class="sub-label">Key Engineering Challenge</div>
+          <p class="body-text">During closed-loop testing, yaw and pitch axes showed asymmetric behavior that could not be explained by mechanical misalignment. Systematic analysis revealed the IMU mounting location — offset from the gimbal center at radius r = 0.0674 m — introduced centripetal acceleration (ω²r, mapped to X-axis) and tangential acceleration (αr, mapped to Z-axis) that corrupted the orientation estimate differently for each rotation axis. A physics-based correction was derived and implemented, with validation performed through a custom real-time oscilloscope dashboard that measured the noise floor before and after correction.</p>
+
+          <div class="img-row">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/tvc_notebook_9.jpeg" alt="IMU error analysis" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/PCB_PCB1_20260724.png" alt="Custom PCB layout" onclick="openLb(this)">
+          </div>
+
+          <div class="sub-label">Specifications</div>
+          <table class="spec-table">
+            <tr><td>Mechanism</td><td>2-DOF cardanic gimbal, ±12° deflection each axis</td></tr>
+            <tr><td>Actuation</td><td>2× servo motors with 3:1 mechanical advantage linkages</td></tr>
+            <tr><td>Controller</td><td>ESP32-WROOM-32, dual-core 240 MHz</td></tr>
+            <tr><td>IMU</td><td>MPU-6050, I²C 400 kHz, Kalman-filtered orientation</td></tr>
+            <tr><td>PCB</td><td>Custom round PCB — motor driver, power regulation, status LED</td></tr>
+            <tr><td>CAD</td><td>Onshape — full parametric assembly, engineering drawings</td></tr>
+            <tr><td>Status</td><td>Fabrication and closed-loop validation in progress</td></tr>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- PIV -->
+    <div class="proj-card" id="card-piv">
+      <div class="proj-trigger" onclick="toggle('piv')">
+        <div class="proj-index">02</div>
+        <div>
+          <div class="proj-name">PIV Fluid Dynamics Research</div>
+          <p class="proj-summary">Designed and built a complete Particle Image Velocimetry system from scratch to study laminar-to-turbulent flow transition. Validated against two independent theoretical benchmarks: Torricelli's Law (R²=0.958) and projectile motion theory (R²=0.985).</p>
+          <div class="proj-tags-row">
+            <span class="ptag">PIV / PIVlab</span><span class="ptag">MATLAB</span><span class="ptag">Fusion 360 CAD</span>
+            <span class="ptag">CNC Machining</span><span class="ptag">Laser Optics</span><span class="ptag">Fluid Dynamics</span>
+          </div>
+        </div>
+        <div class="proj-toggle">+</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-body-inner">
+
+          <div class="sub-label">Overview</div>
+          <p class="body-text">This undergraduate research project at Wisconsin Lutheran College developed a validated PIV measurement system for quantitative fluid flow analysis. The entire experimental apparatus — Torricelli panel, optical bench, tracer particle delivery — was designed in Fusion 360 and fabricated using CNC machining and laser cutting. PIVlab (MATLAB) was used for cross-correlation velocity extraction from 2,300 frames per run.</p>
+
+          <div class="two-col">
+            <div>
+              <div class="sub-label" style="margin-top:0">Key Results</div>
+              <ul class="bullet-list">
+                <li>PIV velocity data agreed with projectile motion model (R² = 0.985)</li>
+                <li>Torricelli's Law trendline yielded R² = 0.958 across all heights</li>
+                <li>Measured mean velocity range: 0.00 – 0.22 m/s at 0 – 35 mm head</li>
+                <li>Beam profile characterised: divergence 1.1 mRad, convergence 1.2 mRad</li>
+                <li>Two interchangeable nozzle geometries fabricated and tested</li>
+              </ul>
+            </div>
+            <div>
+              <div class="sub-label" style="margin-top:0">Instrumentation</div>
+              <ul class="bullet-list">
+                <li>LaserCube 2W 532 nm — knife-edge beam profiled</li>
+                <li>Thorlabs optical mounts and precision alignment rails</li>
+                <li>DSLR high-speed capture for particle tracking</li>
+                <li>PIVlab (MATLAB) cross-correlation velocity extraction</li>
+                <li>Optical microscope for tracer particle sizing</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="img-row">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/piv/FinalPIVPlot.JPG" alt="PIV velocity plot" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/piv/PIV_Screenshot_3.JPG" alt="PIV analysis screenshot" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/piv/Blueprint_Full.JPG" alt="Apparatus blueprint" onclick="openLb(this)">
+          </div>
+
+          <div class="sub-label">Specifications</div>
+          <table class="spec-table">
+            <tr><td>Laser Source</td><td>LaserCube 2W — 532 nm DPSS, elliptical beam</td></tr>
+            <tr><td>Analysis Software</td><td>PIVlab (MATLAB open-source cross-correlation PIV toolkit)</td></tr>
+            <tr><td>Frame Statistics</td><td>2,300 frames per run; mean u = 0.0609 ± 0.089 m/s</td></tr>
+            <tr><td>Apparatus Material</td><td>Clear acrylic — CNC machined and laser cut</td></tr>
+            <tr><td>Theoretical Comparison</td><td>Torricelli's Law and projectile motion, both fitted to PIV data</td></tr>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ROBOT -->
+    <div class="proj-card" id="card-slb">
+      <div class="proj-trigger" onclick="toggle('slb')">
+        <div class="proj-index">03</div>
+        <div>
+          <div class="proj-name">Self-Balancing Robot</div>
+          <p class="proj-summary">Two-wheeled inverted pendulum robot built from scratch — laser-cut chassis, 3D-printed wheels, NEMA 17 steppers, and a Kalman-filtered PID loop on Arduino. Achieved stable balance after three full redesigns and systematic resolution of cascading hardware and firmware failures.</p>
+          <div class="proj-tags-row">
+            <span class="ptag">Arduino / C++</span><span class="ptag">PID Control</span><span class="ptag">Kalman Filter</span>
+            <span class="ptag">MPU-6050</span><span class="ptag">NEMA 17 Steppers</span><span class="ptag">Laser Cut</span>
+          </div>
+        </div>
+        <div class="proj-toggle">+</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-body-inner">
+
+          <div class="sub-label">Overview</div>
+          <p class="body-text">Built with a collaborator over an iterative series of sessions, this project pushed through three complete chassis redesigns and multiple hardware-level failures. The final build uses 2A NEMA 17 steppers driven by an Adafruit Motor Shield V2, a Kalman-filtered IMU for angle estimation, and a tuned PID controller (Kp=39.5, Ki=2.2, Kd=0.11) that achieves stable, repeatable balance. I²C was increased to 400 kHz to reduce motor latency below the control loop's stability threshold.</p>
+
+          <div class="sub-label">Failures Overcome</div>
+          <ul class="bullet-list">
+            <li>Initial 350mA steppers lacked torque — replaced with 2A NEMA 17s</li>
+            <li>PWM timing conflicts between motor library and IMU polling — resolved through interrupt restructuring</li>
+            <li>Asynchronous stepping caused resonance oscillation — fixed with coordinated step sequencing</li>
+            <li>I²C at 100 kHz introduced latency that destabilised PID — increased to 400 kHz</li>
+          </ul>
+
+          <div class="sub-label">Specifications</div>
+          <table class="spec-table">
+            <tr><td>Controller</td><td>Arduino UNO — Kalman-filtered PID at 200 Hz loop rate</td></tr>
+            <tr><td>IMU</td><td>MPU-6050 — I²C 400 kHz, complementary + Kalman filter</td></tr>
+            <tr><td>Motors</td><td>2× NEMA 17 2A steppers — Adafruit Motor Shield V2</td></tr>
+            <tr><td>PID Gains</td><td>Kp = 39.5, Ki = 2.2, Kd = 0.11 (empirically tuned)</td></tr>
+            <tr><td>Chassis</td><td>Laser-cut 1/4" plywood, 3D-printed wheels</td></tr>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- QUADCOPTER -->
+    <div class="proj-card" id="card-quad">
+      <div class="proj-trigger" onclick="toggle('quad')">
+        <div class="proj-index">04</div>
+        <div>
+          <div class="proj-name">Quadcopter UAV</div>
+          <p class="proj-summary">Custom quadcopter built from components across mechanical, electrical, and firmware layers. Resolved layered hardware, RF interference, and firmware failures. Built a Python WiFi telemetry console for real-time in-flight PID tuning.</p>
+          <div class="proj-tags-row">
+            <span class="ptag">ESP32 / C</span><span class="ptag">ESP-IDF v4.4</span><span class="ptag">Brushless Motors</span>
+            <span class="ptag">BLHeli_S ESC</span><span class="ptag">Kalman Filter</span><span class="ptag">WiFi UDP</span>
+          </div>
+        </div>
+        <div class="proj-toggle">+</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-body-inner">
+
+          <div class="sub-label">Overview</div>
+          <p class="body-text">Built collaboratively around an ESP32-WROOM-32 flight controller, 4-in-1 BLHeli_S 30A ESC, and iFlight XING-E Pro 2306 brushless motors. The system required integration across mechanical, electrical, and software layers simultaneously. A key diagnostic challenge was the ADC2/WiFi co-interference on the ESP32, which required all PWM outputs to be mapped to ADC1 pins.</p>
+
+          <div class="sub-label">Firmware and Software</div>
+          <p class="body-text">Flight firmware written in C using ESP-IDF v4.4. Core tasks include IMU data acquisition at I²C 400 kHz, Kalman / complementary filter for angle estimation, PID stabilisation loop, Bluepad32 gamepad polling, and WiFi UDP telemetry transmission. The companion Python script (MBL_QTC) provides a live telemetry console for real-time PID tuning.</p>
+
+          <div class="code-block"><pre>// Motor mixing — pitch + roll averaged per motor
+M1_pwm = (M1_roll + M1_pitch) / 2;
+M2_pwm = (M2_roll + M2_pitch) / 2;
+
+// ADC2 disabled when WiFi active — all PWM on ADC1
+// MBL_QTC: run in Python shell for live telemetry</pre></div>
+
+          <a class="gh-link" href="https://github.com/CherryWookie/ESP32-Drone" target="_blank">
+            <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            GitHub — CherryWookie/ESP32-Drone
+          </a>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- RUBENS TUBE -->
+    <div class="proj-card" id="card-rubens">
+      <div class="proj-trigger" onclick="toggle('rubens')">
+        <div class="proj-index">05</div>
+        <div>
+          <div class="proj-name">Rubens' Tube</div>
+          <p class="proj-summary">Designed and fabricated a standing wave visualization apparatus from scratch. Applied fluid dynamics principles to achieve stable, repeatable flame patterns deployable across multiple resonant frequency modes — built as a lecture demonstration tool.</p>
+          <div class="proj-tags-row">
+            <span class="ptag">Acoustics</span><span class="ptag">Fluid Dynamics</span><span class="ptag">Fabrication</span><span class="ptag">Standing Waves</span>
+          </div>
+        </div>
+        <div class="proj-toggle">+</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-body-inner">
+          <div class="sub-label">Concept</div>
+          <p class="body-text">A Rubens' tube demonstrates that standing acoustic waves produce stationary pressure nodes and antinodes. Flame height is proportional to local gas pressure amplitude — meaning the standing wave pattern becomes directly visible as a stable landscape of flame heights. By sweeping the drive frequency, multiple harmonics become observable as distinct, repeatable patterns. The tube was designed and fabricated to serve as a teaching instrument, optimising for stability and repeatability of the flame patterns rather than purely visual spectacle.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PHOTO DIVIDER 1 — Pyrenees sunset -->
+<div class="photo-divider">
+  <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC04328.jpg" alt="Pyrenees sunset, Spain">
+  <div class="photo-divider-caption">Pyrenees · Spain · 2024</div>
+</div>
+
+<!-- ═══════════════════════════════════════ PHOTOGRAPHY ══ -->
+<section class="section" id="photography">
+  <div class="section-eyebrow">Photography</div>
+  <h2 class="section-title">Seeing the<br><em>in-between</em></h2>
+
+  <div class="photo-grid reveal">
+
+    <div class="photo-item wide">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC04940.jpg" alt="Apple Store night" onclick="openLb(this)">
+      <div class="photo-caption">Geometry · Night · USA</div>
+    </div>
+
+    <div class="photo-item">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC03402.jpg" alt="Spring blossoms Barcelona" onclick="openLb(this)">
+      <div class="photo-caption">Barcelona · Spring</div>
+    </div>
+
+    <div class="photo-item">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC04198.jpg" alt="Architecture" onclick="openLb(this)">
+    </div>
+
+    <div class="photo-item">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC02789.jpg" alt="Street scene" onclick="openLb(this)">
+    </div>
+
+    <div class="photo-item wide">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC03639.jpg" alt="Landscape" onclick="openLb(this)">
+    </div>
+
+    <div class="photo-item">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC05283.jpg" alt="Detail" onclick="openLb(this)">
+    </div>
+
+    <div class="photo-item">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC02052.jpg" alt="Urban texture" onclick="openLb(this)">
+    </div>
+
+    <div class="photo-item">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC01965.jpg" alt="Light and shadow" onclick="openLb(this)">
+    </div>
+
+  </div>
+</section>
+
+<!-- PHOTO DIVIDER 2 — Barcelona street -->
+<div class="photo-divider">
+  <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC05497.jpg" alt="Barcelona">
+  <div class="photo-divider-caption">Barcelona · 2024–2025</div>
+</div>
+
+<!-- ═══════════════════════════════════════ ABOUT ══ -->
+<section class="section" id="about">
+  <div class="section-eyebrow">About</div>
+  <h2 class="section-title">The person<br><em>behind the work</em></h2>
+
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>I grew up taking things apart to understand how they worked — alarm clocks, computers, anything with moving parts. That instinct led me to physics, which forces you to build understanding from first principles rather than just applying formulas, and then to engineering, where that understanding becomes something physical you can hold.</p>
+      <p>I completed my MSc in Engineering Physics at the Universitat Politècnica de Catalunya in Barcelona, where I developed a molecularly imprinted polymer biosensor for non-invasive cortisol detection — work that led to a first-author publication in Microchemical Journal (Elsevier, 2026). Before that I spent four years at Wisconsin Lutheran College, where I simultaneously ran fluid dynamics research, taught AP Physics, and worked as a cabinet maker to fund my degree.</p>
+      <p>Outside of engineering I shoot with a Sony Alpha, play and compose music, and build things with friends — the quadcopter and self-balancing robot on this page were both collaborative projects born from curiosity rather than obligation. I lived in Barcelona for 18 months and speak Spanish fluently. I moved there on a one-way ticket and figured the rest out as I went.</p>
+    </div>
+    <div class="about-facts">
+      <div class="fact-item">
+        <div class="fact-label">Education</div>
+        <div class="fact-value">MSc Engineering Physics — Universitat Politècnica de Catalunya (2025)<br>BS Physics — Wisconsin Lutheran College (2023)</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">Publication</div>
+        <div class="fact-value">Sell, M.J. et al. The future of cortisol detection: Molecularly imprinted polymers enhanced by artificial intelligence. <em>Microchemical Journal</em>, 224, 117804. Elsevier (2026).</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">Honors</div>
+        <div class="fact-value">Matrícula d'Honor (2025) · INIREC Fellowship (2025) · Kepler Scholarship (2020)</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">Languages</div>
+        <div class="fact-value">English (native) · Spanish (C1 fluent) · Catalan (A1)</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">Contact</div>
+        <div class="fact-value">msworkacquisition@gmail.com</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="h-rule"></div>
+
+<!-- SKILLS -->
+<section class="section" style="padding-top: 64px; padding-bottom: 64px;">
+  <div class="skills-grid reveal">
+    <div class="skill-cell">
+      <h3>Mechanical Design</h3>
+      <p>Onshape, Fusion 360, GD&T, CAM toolpath programming, CNC machining, assembly drawings, tolerance analysis</p>
+    </div>
+    <div class="skill-cell">
+      <h3>Physics Research</h3>
+      <p>PIV, laser optics, optical bench alignment, fluid dynamics, electrochemistry, biosensor development, spectroscopy</p>
+    </div>
+    <div class="skill-cell">
+      <h3>Robotics and Control</h3>
+      <p>PID control, Kalman filtering, sensor fusion, IMU integration, motor control, embedded systems, closed-loop validation</p>
+    </div>
+    <div class="skill-cell">
+      <h3>Fabrication</h3>
+      <p>CNC machining, laser cutting, 3D printing (FDM), soldering, PCB design, acrylic bonding, woodworking</p>
+    </div>
+    <div class="skill-cell">
+      <h3>Programming</h3>
+      <p>Python, C/C++, MATLAB, Arduino, ESP-IDF; data analysis, plotting pipelines, telemetry systems</p>
+    </div>
+    <div class="skill-cell">
+      <h3>Electronics</h3>
+      <p>PCB layout (EasyEDA), soldering, I²C/UART/PWM protocols, buck converters, ESC calibration, motor drivers</p>
+    </div>
+    <div class="skill-cell">
+      <h3>Research and Writing</h3>
+      <p>Peer-reviewed publication, technical documentation, LaTeX, experimental design, data interpretation</p>
+    </div>
+    <div class="skill-cell">
+      <h3>Construction</h3>
+      <p>Custom cabinetry, general contracting, end-to-end project management, material selection, client delivery</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Michael Sell · Engineering Physics MSc</p>
+  <a href="https://github.com/CherryWookie" target="_blank">github.com/CherryWookie</a>
+</footer>
+
+<!-- LIGHTBOX -->
+<div id="lb" onclick="closeLb()">
+  <img id="lb-img" src="" alt="">
+</div>
+
+<script>
+  function toggle(id) {
+    const card = document.getElementById('card-' + id);
+    const wasOpen = card.classList.contains('open');
+    document.querySelectorAll('.proj-card').forEach(c => c.classList.remove('open'));
+    if (!wasOpen) card.classList.add('open');
+  }
+  function openLb(img) {
+    document.getElementById('lb-img').src = img.src;
+    document.getElementById('lb').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLb() {
+    document.getElementById('lb').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
