@@ -745,57 +745,65 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
 
   <div class="photo-grid reveal">
 
+    <!-- ROW 1: wide + 1 -->
     <div class="photo-item wide">
       <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC04940.jpg" alt="Apple Store night" onclick="openLb(this)">
       <div class="photo-caption">Geometry · Night · USA</div>
     </div>
-
     <div class="photo-item">
       <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC03402.jpg" alt="Spring blossoms Barcelona" onclick="openLb(this)">
       <div class="photo-caption">Barcelona · Spring</div>
     </div>
 
+    <!-- ROW 2: 1 + 1 + 1 -->
     <div class="photo-item">
       <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC04198.jpg" alt="Architecture" onclick="openLb(this)">
     </div>
-
     <div class="photo-item">
       <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC02789.jpg" alt="Street scene" onclick="openLb(this)">
     </div>
-
-    <div class="photo-item wide">
-      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC03639.jpg" alt="Landscape" onclick="openLb(this)">
-    </div>
-
-    <div class="photo-item">
-      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC05283.jpg" alt="Detail" onclick="openLb(this)">
-    </div>
-
-    <div class="photo-item">
-      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC02052.jpg" alt="Urban texture" onclick="openLb(this)">
-    </div>
-
-    <div class="photo-item">
-      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC01965.jpg" alt="Light and shadow" onclick="openLb(this)">
-    </div>
-
     <div class="photo-item">
       <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC02056.jpg" alt="Stone statue at golden hour, Barcelona" onclick="openLb(this)">
       <div class="photo-caption">Tibidabo · Barcelona · Golden Hour</div>
     </div>
 
+    <!-- ROW 3: 1 + wide -->
+    <div class="photo-item">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC05283.jpg" alt="Detail" onclick="openLb(this)">
+    </div>
+    <div class="photo-item wide">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC03639.jpg" alt="Landscape" onclick="openLb(this)">
+    </div>
+
+    <!-- ROW 4: 1 + 1 + 1 -->
+    <div class="photo-item">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC02052.jpg" alt="Urban texture" onclick="openLb(this)">
+    </div>
+    <div class="photo-item">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC01965.jpg" alt="Light and shadow" onclick="openLb(this)">
+    </div>
+    <div class="photo-item">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC04328.jpg" alt="Pyrenees sunset" onclick="openLb(this)">
+      <div class="photo-caption">Pyrenees · Spain</div>
+    </div>
+
+    <!-- ROW 5: wide + 1 -->
     <div class="photo-item wide">
       <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC03068.jpg" alt="Beach at sunset, Basque Country" onclick="openLb(this)">
       <div class="photo-caption">Basque Coast · Sunset</div>
+    </div>
+    <div class="photo-item">
+      <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC05497.jpg" alt="Barcelona street" onclick="openLb(this)">
+      <div class="photo-caption">Barcelona · 2024</div>
     </div>
 
   </div>
 </section>
 
-<!-- PHOTO DIVIDER 2 — Barcelona street -->
+<!-- PHOTO DIVIDER 2 — Barcelona -->
 <div class="photo-divider">
-  <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC05497.jpg" alt="Barcelona">
-  <div class="photo-divider-caption">Barcelona · 2024–2025</div>
+  <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC04328.jpg" alt="Pyrenees">
+  <div class="photo-divider-caption">Pyrenees · Spain · 2024</div>
 </div>
 
 <!-- ═══════════════════════════════════════ ABOUT ══ -->
@@ -803,35 +811,63 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
   <div class="section-eyebrow">About</div>
   <h2 class="section-title">The person<br><em>behind the work</em></h2>
 
-  <div class="about-grid reveal">
-    <div class="about-text">
+  <!-- PORTRAIT + BIO -->
+  <div style="display:grid; grid-template-columns: 320px 1fr; gap: 56px; align-items: start; margin-bottom: 56px;" class="reveal">
+
+    <!-- PORTRAIT -->
+    <div>
+      <div style="position:relative; overflow:hidden; border-radius: 3px;">
+        <img
+          src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/about/WhatsApp_Image_2026-02-27_at_15_58_29__1_.jpeg"
+          alt="Michael Sell"
+          style="width:100%; display:block; filter: saturate(0); object-fit:cover; aspect-ratio: 3/4;"
+        >
+        <div style="position:absolute; inset:0; border: 1px solid rgba(184,92,42,0.15); border-radius:3px; pointer-events:none;"></div>
+      </div>
+      <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--rule);">
+        <div style="font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink); margin-bottom:2px;">Michael Sell</div>
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.08em; color:var(--light);">Engineering Physics MSc · Published Researcher</div>
+      </div>
+    </div>
+
+    <!-- BIO -->
+    <div class="about-text" style="padding-top: 4px;">
       <p>I grew up taking things apart to understand how they worked — alarm clocks, computers, anything with moving parts. That instinct led me to physics, which forces you to build understanding from first principles rather than just applying formulas, and then to engineering, where that understanding becomes something physical you can hold.</p>
       <p>I completed my MSc in Engineering Physics at the Universitat Politècnica de Catalunya in Barcelona, where I developed a molecularly imprinted polymer biosensor for non-invasive cortisol detection — work that led to a first-author publication in Microchemical Journal (Elsevier, 2026). Before that I spent four years at Wisconsin Lutheran College, where I simultaneously ran fluid dynamics research, taught AP Physics, and worked as a cabinet maker to fund my degree.</p>
       <p>Outside of engineering I shoot with a Sony Alpha, play and compose music, and build things with friends — the quadcopter and self-balancing robot on this page were both collaborative projects born from curiosity rather than obligation. I lived in Barcelona for 18 months and speak Spanish fluently. I moved there on a one-way ticket and figured the rest out as I went.</p>
     </div>
-    <div class="about-facts">
-      <div class="fact-item">
+  </div>
+
+  <!-- FACTS GRID -->
+  <div class="about-facts reveal">
+    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--rule);">
+      <div style="padding: 20px 24px; border-right: 1px solid var(--rule);">
         <div class="fact-label">Education</div>
-        <div class="fact-value">MSc Engineering Physics — Universitat Politècnica de Catalunya (2025)<br>BS Physics — Wisconsin Lutheran College (2023)</div>
+        <div class="fact-value">MSc Engineering Physics — UPC Barcelona (2025)<br>BS Physics — Wisconsin Lutheran College (2023)</div>
       </div>
-      <div class="fact-item">
+      <div style="padding: 20px 24px; border-right: 1px solid var(--rule);">
         <div class="fact-label">Publication</div>
-        <div class="fact-value">Sell, M.J. et al. The future of cortisol detection: Molecularly imprinted polymers enhanced by artificial intelligence. <em>Microchemical Journal</em>, 224, 117804. Elsevier (2026).</div>
+        <div class="fact-value" style="font-size:0.8rem;">Sell, M.J. et al. <em>Microchemical Journal</em>, 224, 117804. Elsevier (2026).</div>
       </div>
-      <div class="fact-item">
+      <div style="padding: 20px 24px;">
         <div class="fact-label">Honors</div>
-        <div class="fact-value">Matrícula d'Honor (2025) · INIREC Fellowship (2025) · Kepler Scholarship (2020)</div>
+        <div class="fact-value">Matrícula d'Honor · INIREC Fellowship · Kepler Scholarship</div>
       </div>
-      <div class="fact-item">
+      <div style="padding: 20px 24px; border-top: 1px solid var(--rule); border-right: 1px solid var(--rule);">
         <div class="fact-label">Languages</div>
-        <div class="fact-value">English (native) · Spanish (C1 fluent) · Catalan (A1)</div>
+        <div class="fact-value">English (native) · Spanish (C1) · Catalan (A1)</div>
       </div>
-      <div class="fact-item">
+      <div style="padding: 20px 24px; border-top: 1px solid var(--rule); border-right: 1px solid var(--rule);">
+        <div class="fact-label">Based</div>
+        <div class="fact-value">Midwest, USA · Open to relocation</div>
+      </div>
+      <div style="padding: 20px 24px; border-top: 1px solid var(--rule);">
         <div class="fact-label">Contact</div>
         <div class="fact-value">msworkacquisition@gmail.com</div>
       </div>
     </div>
   </div>
+
 </section>
 
 <div class="h-rule"></div>
