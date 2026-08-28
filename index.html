@@ -207,6 +207,7 @@
   /* ── IMAGE GALLERY ── */
   .img-row { display: flex; gap: 8px; margin: 16px 0; }
   .img-row img { flex: 1; min-width: 0; object-fit: cover; border-radius: 3px; cursor: zoom-in; aspect-ratio: 4/3; }
+  .img-row-tall img { aspect-ratio: 3/4; }
   .img-row img.tall { aspect-ratio: 3/4; }
   .img-row img.wide { aspect-ratio: 16/9; }
   .img-single img { width: 100%; max-height: 420px; object-fit: cover; border-radius: 3px; cursor: zoom-in; }
@@ -395,6 +396,7 @@
     .img-row { flex-wrap: wrap; gap: 8px; }
     .build-figure { float: none; width: 100%; max-width: 100%; margin: 0 0 20px; }
     .img-row img { flex: 1 1 calc(50% - 4px); min-width: calc(50% - 4px); aspect-ratio: 1/1; }
+    .img-row-tall img { aspect-ratio: 3/4; }
 
     .two-col { grid-template-columns: 1fr; gap: 20px; }
 
@@ -434,6 +436,7 @@
   @media (max-width: 480px) {
     .hero h1 { font-size: clamp(2.6rem, 13vw, 4rem); }
     .img-row img { flex: 1 1 100%; min-width: 100%; aspect-ratio: 16/10; }
+    .img-row-tall img { aspect-ratio: 4/5; }
   }
 </style>
 <script data-goatcounter="https://cherrywookieportfolio.goatcounter.com/count"
@@ -529,11 +532,10 @@
           <div class="clearfix"></div>
 
           <div class="sub-label">Physical Build</div>
-          <div class="img-row">
-            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/tvc_notebook_19__1_.jpg" alt="Base plate concept sketch" style="transform: rotate(90deg); object-fit: contain; background: var(--surface);" onclick="openLb(this)">
+          <div class="img-row img-row-tall">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/tvc_notebook_19__1_.jpg" alt="Base plate concept sketch" onclick="openLb(this)">
             <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/cad_design_rev_a.png" alt="CAD design, gimbal and servo assembly, rev A" onclick="openLb(this)">
             <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/tvc_build_almost_done.jpg" alt="Build nearing completion" onclick="openLb(this)">
-            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/PXL_20260804_041542670.jpg" alt="TVC demonstrator physical build" onclick="openLb(this)">
           </div>
 
           <div class="sub-label">Key Engineering Challenge</div>
