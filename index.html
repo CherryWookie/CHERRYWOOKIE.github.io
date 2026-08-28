@@ -322,17 +322,18 @@
   .lb-share.copied { border-color: var(--accent); color: var(--accent); }
 
   /* ── PDF LINK + MODAL ── */
-  .pdf-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .pdf-links { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0 24px; }
   .pdf-link {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: 'DM Mono', monospace; font-size: 0.66rem;
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: 'DM Mono', monospace; font-size: 0.7rem;
     letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--ink); text-decoration: none;
-    border: 1px solid var(--rule); padding: 9px 16px;
-    border-radius: 3px; transition: all 0.2s; cursor: pointer; background: none;
+    color: #fff; text-decoration: none;
+    background: var(--accent); border: 1px solid var(--accent);
+    padding: 12px 20px; border-radius: 3px; transition: all 0.2s; cursor: pointer;
+    box-shadow: 0 4px 14px rgba(184,98,42,0.28);
   }
-  .pdf-link:hover { border-color: var(--accent); color: var(--accent); }
-  .pdf-link svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+  .pdf-link:hover { background: var(--accent2); border-color: var(--accent2); transform: translateY(-1px); }
+  .pdf-link svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
   #pdf-modal {
     display: none; position: fixed; inset: 0; z-index: 998;
     background: rgba(28,26,24,0.92); padding: 4vh 4vw;
@@ -495,13 +496,26 @@
             <button class="lb-share" onclick="event.stopPropagation(); shareProject('tvc', this)">Share ↗</button>
           </div>
 
+          <div class="img-single" style="margin-bottom: 24px;">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/full_tvc_build.jpeg" alt="Completed TVC gimbal assembly, full build" onclick="openLb(this)">
+          </div>
+
+          <div class="pdf-links">
+            <button class="pdf-link" onclick="openPdf('https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/TVC_Engineering_Drawings.pdf')">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L18.5 9H14V4.5zM6 20V4h6v6h6v10H6z"/></svg>
+              Engineering Drawings (PDF)
+            </button>
+            <button class="pdf-link" onclick="openPdf('https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/TVC_Final_Report.pdf')">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L18.5 9H14V4.5zM6 20V4h6v6h6v10H6z"/></svg>
+              Final Report (PDF)
+            </button>
+          </div>
+
           <div class="sub-label">Overview</div>
           <p class="body-text">The TVC Demonstrator is a self-directed project modeling the core mechanism behind rocket engine steering: a two-degree-of-freedom gimbal that redirects thrust to control attitude. The entire system was designed from scratch with no pre-existing template: mechanism geometry derived analytically, PCB laid out in EasyEDA, firmware written for ESP32, and all structural components fabricated by hand.</p>
 
-          <div class="img-row">
+          <div class="img-single">
             <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/PXL_20260804_041542670.jpg" alt="TVC demonstrator physical build" onclick="openLb(this)">
-            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/tvc_notebook_1.jpeg" alt="Initial concept sketches" onclick="openLb(this)">
-            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/tvc_notebook_19__1_.jpg" alt="Base plate concept sketch" onclick="openLb(this)">
           </div>
 
           <div class="sub-label">Key Engineering Challenge</div>
@@ -510,7 +524,6 @@
           <div class="img-row">
             <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/1787251039633_image.png" alt="TVC gimbal assembly engineering drawing with BOM" onclick="openLb(this)">
             <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/tvc_notebook_9.jpeg" alt="IMU error analysis" onclick="openLb(this)">
-            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/PCB_PCB1_20260724.png" alt="Custom PCB layout" onclick="openLb(this)">
           </div>
 
           <div class="sub-label">Specifications</div>
@@ -524,12 +537,12 @@
             <tr><td>Status</td><td>Fabrication and closed-loop validation complete</td></tr>
           </table>
 
-          <div class="sub-label">Final Build</div>
-          <p class="body-text">The completed gimbal assembly, showing the dual-servo actuation, center-mounted brushless fan for simulated thrust, and the full mechanical linkage integrated onto the base ring.</p>
+          <div class="sub-label">PCB and Wiring</div>
+          <p class="body-text">Custom round PCB layout, the driver circuit powering the status LED, and the full wiring diagram routing the servo driver, ESP32, and IMU across the base ring.</p>
           <div class="img-row">
-            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/full_tvc_build.jpeg" alt="Completed TVC gimbal assembly, full build" onclick="openLb(this)">
             <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/circuit_layout.png" alt="Multisim circuit schematic, status LED driver with PN2222 transistor" onclick="openLb(this)">
-            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/pcb_wiring_diagram.png" alt="Hand-annotated PCB wiring layout, servo driver, ESP32, IMU, base ring routing" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/pcb_wiring_diagram.png" alt="Hand-annotated PCB wiring layout, servo driver, ESP32, IMU, base ring routing" style="transform: rotate(90deg);" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/PCB_PCB1_20260724.png" alt="Custom PCB layout" onclick="openLb(this)">
           </div>
 
           <div class="sub-label">Closed-Loop Results</div>
@@ -539,16 +552,6 @@
             <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/results_pitch.png" alt="Pitch axis step response, 8 isolated disturbances, deflections from 2.4° to 15.2°" onclick="openLb(this)">
           </div>
 
-          <div class="pdf-links">
-            <button class="pdf-link" onclick="openPdf('https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/TVC_Engineering_Drawings.pdf')">
-              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L18.5 9H14V4.5zM6 20V4h6v6h6v10H6z"/></svg>
-              Engineering Drawings (PDF)
-            </button>
-            <button class="pdf-link" onclick="openPdf('https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/TVC_Final_Report.pdf')">
-              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L18.5 9H14V4.5zM6 20V4h6v6h6v10H6z"/></svg>
-              Final Report (PDF)
-            </button>
-          </div>
 
         </div>
       </div>
@@ -1162,13 +1165,19 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
   function toggle(id) {
     const card = document.getElementById('card-' + id);
     const wasOpen = card.classList.contains('open');
+    const previousOpen = document.querySelector('.proj-card.open');
+    const switchingCards = previousOpen && previousOpen !== card;
     document.querySelectorAll('.proj-card').forEach(c => c.classList.remove('open'));
     if (!wasOpen) {
       card.classList.add('open');
       history.replaceState(null, '', '#card-' + id);
+      // Wait for the previous section's collapse animation to finish before
+      // measuring scroll position, otherwise the page is still tall mid-collapse
+      // and scrollIntoView overshoots past the target.
+      const delay = switchingCards ? 700 : 60;
       setTimeout(() => {
         card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 60);
+      }, delay);
     }
   }
 
@@ -1217,9 +1226,11 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
     if (e.key === 'ArrowRight') lbStep(1);
   });
 
-  // ── PDF MODAL ──
+  // ── PDF MODAL: routed through Google's inline viewer for a scrollable,
+  // in-page preview instead of triggering a browser download ──
   function openPdf(url) {
-    document.getElementById('pdf-frame').src = url;
+    const viewerUrl = 'https://docs.google.com/viewer?url=' + encodeURIComponent(url) + '&embedded=true';
+    document.getElementById('pdf-frame').src = viewerUrl;
     document.getElementById('pdf-modal').classList.add('active');
     document.body.style.overflow = 'hidden';
   }
