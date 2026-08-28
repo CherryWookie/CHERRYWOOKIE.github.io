@@ -42,6 +42,20 @@
   }
   .nav-links a:hover { color: var(--accent); }
 
+  /* ── MOBILE NAV BURGER ── */
+  .nav-burger {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 32px; height: 32px; background: none; border: none; cursor: pointer;
+    padding: 0; z-index: 210;
+  }
+  .nav-burger span {
+    display: block; width: 100%; height: 1.5px; background: var(--ink);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
   /* ── HERO ── */
   .hero {
     min-height: 100vh; display: flex; flex-direction: column;
@@ -114,6 +128,7 @@
   .proj-card {
     border-top: 1px solid var(--rule);
     overflow: hidden;
+    scroll-margin-top: 88px;
   }
   .proj-card:last-child { border-bottom: 1px solid var(--rule); }
   .proj-trigger {
@@ -133,6 +148,7 @@
   }
   .proj-summary { font-size: 0.85rem; color: var(--mid); max-width: 580px; line-height: 1.65; margin-bottom: 10px; }
   .proj-tags-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .proj-tags-top { margin-bottom: 4px; align-items: center; }
   .ptag {
     font-family: 'DM Mono', monospace; font-size: 0.56rem;
     letter-spacing: 0.07em; text-transform: uppercase;
@@ -263,6 +279,149 @@
   /* ── REVEAL ── */
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
   .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── LIGHTBOX: caption + nav ── */
+  #lb { flex-direction: column; padding: 24px; }
+  #lb-stage { position: relative; display: flex; align-items: center; justify-content: center; width: 100%; flex: 1; min-height: 0; }
+  #lb img { max-width: 88vw; max-height: 74vh; object-fit: contain; cursor: default; }
+  #lb-caption {
+    font-family: 'DM Mono', monospace; color: #EDEAE5; font-size: 0.78rem;
+    letter-spacing: 0.04em; text-align: center; max-width: 720px;
+    margin: 18px auto 0; line-height: 1.6;
+  }
+  #lb-counter {
+    font-family: 'DM Mono', monospace; color: rgba(237,234,229,0.5); font-size: 0.62rem;
+    letter-spacing: 0.12em; text-align: center; margin-top: 8px; text-transform: uppercase;
+  }
+  .lb-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(237,234,229,0.08); border: 1px solid rgba(237,234,229,0.2);
+    color: #EDEAE5; font-family: 'DM Mono', monospace; font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.2s; user-select: none;
+  }
+  .lb-arrow:hover { background: rgba(237,234,229,0.18); }
+  .lb-prev { left: 8px; }
+  .lb-next { right: 8px; }
+  .lb-close {
+    position: absolute; top: 20px; right: 24px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(237,234,229,0.08); border: 1px solid rgba(237,234,229,0.2);
+    color: #EDEAE5; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 2;
+  }
+  .lb-share {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'DM Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--light);
+    background: none; border: 1px solid var(--rule); border-radius: 3px;
+    padding: 5px 10px; cursor: pointer; margin-left: 12px; transition: all 0.2s;
+  }
+  .lb-share:hover { border-color: var(--accent); color: var(--accent); }
+  .lb-share.copied { border-color: var(--accent); color: var(--accent); }
+
+  /* ── PDF LINK + MODAL ── */
+  .pdf-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .pdf-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'DM Mono', monospace; font-size: 0.66rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink); text-decoration: none;
+    border: 1px solid var(--rule); padding: 9px 16px;
+    border-radius: 3px; transition: all 0.2s; cursor: pointer; background: none;
+  }
+  .pdf-link:hover { border-color: var(--accent); color: var(--accent); }
+  .pdf-link svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+  #pdf-modal {
+    display: none; position: fixed; inset: 0; z-index: 998;
+    background: rgba(28,26,24,0.92); padding: 4vh 4vw;
+  }
+  #pdf-modal.active { display: flex; flex-direction: column; }
+  #pdf-modal-bar {
+    display: flex; justify-content: flex-end; padding-bottom: 12px;
+  }
+  #pdf-modal iframe {
+    flex: 1; width: 100%; border: none; background: #fff; border-radius: 3px;
+  }
+
+  /* ── MOBILE RESPONSIVE ── */
+  @media (max-width: 860px) {
+    nav { padding: 14px 20px; }
+    .nav-burger { display: flex; }
+    .nav-links {
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--bg); border-bottom: 1px solid var(--rule);
+      flex-direction: column; gap: 0; padding: 0 20px;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease;
+      box-shadow: 0 16px 28px rgba(0,0,0,0.10);
+    }
+    .nav-links.open { max-height: 80vh; overflow-y: auto; }
+    .nav-links li { border-top: 1px solid var(--rule); }
+    .nav-links a { display: block; padding: 16px 4px; font-size: 0.92rem; }
+    #nav-scrim {
+      display: none; position: fixed; inset: 0; top: 0; background: rgba(28,26,24,0.3); z-index: 150;
+    }
+    #nav-scrim.open { display: block; }
+
+    .hero { padding: 0 20px 56px; min-height: 88vh; }
+    .hero-bio { max-width: 100%; }
+    .hero-meta { gap: 20px; }
+    .hero-scroll { right: 20px; }
+
+    .section { padding: 64px 20px; }
+    .section-title { margin-bottom: 36px; }
+
+    .proj-trigger { grid-template-columns: 34px 1fr auto; gap: 0 12px; padding: 22px 0; }
+    .proj-index { font-size: 0.56rem; padding-top: 2px; }
+    .proj-name { font-size: 1.22rem; }
+    .proj-summary { font-size: 0.82rem; }
+    .proj-toggle { width: 28px; height: 28px; font-size: 1.05rem; }
+    .proj-body-inner { padding: 0 0 36px 46px; }
+
+    .img-row { flex-wrap: wrap; gap: 8px; }
+    .img-row img { flex: 1 1 calc(50% - 4px); min-width: calc(50% - 4px); aspect-ratio: 1/1; }
+
+    .two-col { grid-template-columns: 1fr; gap: 20px; }
+
+    .spec-table { font-size: 0.76rem; }
+    .spec-table td:first-child { width: 40%; }
+
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    .photo-grid .photo-item img { height: 180px; }
+    .photo-grid .photo-item.tall img { height: 260px; }
+    .photo-grid .photo-item.wide { grid-column: span 2; }
+
+    .photo-divider { height: 42vh; }
+
+    div[style*="grid-template-columns: 320px 1fr"] { display: block !important; }
+    div[style*="grid-template-columns: 320px 1fr"] > div:first-child { max-width: 220px; margin-bottom: 24px; }
+
+    div[style*="grid-template-columns: repeat(3, 1fr)"][style*="border: 1px solid var(--rule)"] {
+      grid-template-columns: 1fr !important;
+    }
+    div[style*="grid-template-columns: repeat(3, 1fr)"][style*="border: 1px solid var(--rule)"] > div {
+      border-right: none !important; border-top: 1px solid var(--rule) !important;
+    }
+    div[style*="grid-template-columns: repeat(3, 1fr)"][style*="border: 1px solid var(--rule)"] > div:first-child {
+      border-top: none !important;
+    }
+
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+
+    footer { padding: 28px 20px; flex-direction: column; gap: 10px; align-items: flex-start; }
+
+    #lb { padding: 12px; }
+    #lb img { max-width: 92vw; max-height: 62vh; }
+    .lb-arrow { width: 38px; height: 38px; }
+    #pdf-modal { padding: 0; }
+  }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: clamp(2.6rem, 13vw, 4rem); }
+    .img-row img { flex: 1 1 100%; min-width: 100%; aspect-ratio: 16/10; }
+  }
 </style>
 <script data-goatcounter="https://cherrywookieportfolio.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
@@ -272,7 +431,7 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">Michael Sell</a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="nav-links">
     <li><a href="#engineering">Engineering</a></li>
     <li><a href="#construction">Construction</a></li>
     <li><a href="#photography">Photography</a></li>
@@ -280,13 +439,17 @@
     <li><a href="#about">About</a></li>
     <li><a href="https://github.com/CherryWookie" target="_blank">GitHub</a></li>
   </ul>
+  <button class="nav-burger" id="nav-burger" onclick="toggleNav()" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div id="nav-scrim" onclick="closeNav()"></div>
 
 <!-- HERO -->
 <section class="hero" style="position:relative;">
   <div class="hero-eyebrow">Engineering Physics · MSc · Published Researcher</div>
   <h1>Michael<br><em>Sell</em></h1>
-  <p class="hero-bio">Physicist who builds things — from rocket gimbal systems and fluid dynamics instrumentation to autonomous robots and custom furniture. Full lifecycle: concept, design, fabricate, validate.</p>
+  <p class="hero-bio">Physicist who builds things, from rocket gimbal systems and fluid dynamics instrumentation to autonomous robots and custom furniture. Full lifecycle: concept, design, fabricate, validate.</p>
   <div class="hero-meta">
     <div class="meta-item">
       <span class="meta-label">Education</span>
@@ -319,19 +482,21 @@
         <div class="proj-index">01</div>
         <div>
           <div class="proj-name">TVC Demonstrator</div>
-          <p class="proj-summary">A scaled thrust vector control system designed from blank sheet — 2-DOF gimbal mechanism, custom PCB, servo actuation, and closed-loop IMU feedback. Diagnosed gravitationally induced sensor error and derived a physics-based correction.</p>
-          <div class="proj-tags-row">
-            <span class="ptag">Onshape CAD</span><span class="ptag">PCB Design</span><span class="ptag">ESP32</span>
-            <span class="ptag">PID Control</span><span class="ptag">IMU Fusion</span><span class="ptag">Servo Actuation</span>
-          </div>
+          <p class="proj-summary">A scaled thrust vector control gimbal, built from a blank sheet with custom PCB and closed-loop IMU feedback.</p>
         </div>
         <div class="proj-toggle">+</div>
       </div>
       <div class="proj-body">
         <div class="proj-body-inner">
 
+          <div class="proj-tags-row proj-tags-top">
+            <span class="ptag">Onshape CAD</span><span class="ptag">PCB Design</span><span class="ptag">ESP32</span>
+            <span class="ptag">PID Control</span><span class="ptag">IMU Fusion</span><span class="ptag">Servo Actuation</span>
+            <button class="lb-share" onclick="event.stopPropagation(); shareProject('tvc', this)">Share ↗</button>
+          </div>
+
           <div class="sub-label">Overview</div>
-          <p class="body-text">The TVC Demonstrator is a self-directed project modeling the core mechanism behind rocket engine steering — a two-degree-of-freedom gimbal that redirects thrust to control attitude. The entire system was designed from scratch with no pre-existing template: mechanism geometry derived analytically, PCB laid out in EasyEDA, firmware written for ESP32, and all structural components fabricated by hand.</p>
+          <p class="body-text">The TVC Demonstrator is a self-directed project modeling the core mechanism behind rocket engine steering: a two-degree-of-freedom gimbal that redirects thrust to control attitude. The entire system was designed from scratch with no pre-existing template: mechanism geometry derived analytically, PCB laid out in EasyEDA, firmware written for ESP32, and all structural components fabricated by hand.</p>
 
           <div class="img-row">
             <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/PXL_20260804_041542670.jpg" alt="TVC demonstrator physical build" onclick="openLb(this)">
@@ -340,7 +505,7 @@
           </div>
 
           <div class="sub-label">Key Engineering Challenge</div>
-          <p class="body-text">During closed-loop testing, yaw and pitch axes showed asymmetric behavior that could not be explained by mechanical misalignment. Systematic analysis revealed the IMU mounting location — offset from the gimbal center at radius r = 0.0674 m — introduced centripetal acceleration (ω²r, mapped to X-axis) and tangential acceleration (αr, mapped to Z-axis) that corrupted the orientation estimate differently for each rotation axis. A physics-based correction was derived and implemented, with validation performed through a custom real-time oscilloscope dashboard that measured the noise floor before and after correction.</p>
+          <p class="body-text">During closed-loop testing, yaw and pitch axes showed asymmetric behavior that could not be explained by mechanical misalignment. Systematic analysis revealed the IMU mounting location, offset from the gimbal center at radius r = 0.0674 m, introduced centripetal acceleration (ω²r, mapped to X-axis) and tangential acceleration (αr, mapped to Z-axis) that corrupted the orientation estimate differently for each rotation axis. A physics-based correction was derived and implemented, with validation performed through a custom real-time oscilloscope dashboard that measured the noise floor before and after correction.</p>
 
           <div class="img-row">
             <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/1787251039633_image.png" alt="TVC gimbal assembly engineering drawing with BOM" onclick="openLb(this)">
@@ -354,10 +519,36 @@
             <tr><td>Actuation</td><td>2× servo motors with 3:1 mechanical advantage linkages</td></tr>
             <tr><td>Controller</td><td>ESP32-WROOM-32, dual-core 240 MHz</td></tr>
             <tr><td>IMU</td><td>MPU-6050, I²C 400 kHz, Kalman-filtered orientation</td></tr>
-            <tr><td>PCB</td><td>Custom round PCB — motor driver, power regulation, status LED</td></tr>
-            <tr><td>CAD</td><td>Onshape — full parametric assembly, engineering drawings</td></tr>
-            <tr><td>Status</td><td>Fabrication and closed-loop validation in progress</td></tr>
+            <tr><td>PCB</td><td>Custom round PCB, motor driver, power regulation, status LED</td></tr>
+            <tr><td>CAD</td><td>Onshape, full parametric assembly, engineering drawings</td></tr>
+            <tr><td>Status</td><td>Fabrication and closed-loop validation complete</td></tr>
           </table>
+
+          <div class="sub-label">Final Build</div>
+          <p class="body-text">The completed gimbal assembly, showing the dual-servo actuation, center-mounted brushless fan for simulated thrust, and the full mechanical linkage integrated onto the base ring.</p>
+          <div class="img-row">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/full_tvc_build.jpeg" alt="Completed TVC gimbal assembly, full build" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/circuit_layout.png" alt="Multisim circuit schematic, status LED driver with PN2222 transistor" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/pcb_wiring_diagram.png" alt="Hand-annotated PCB wiring layout, servo driver, ESP32, IMU, base ring routing" onclick="openLb(this)">
+          </div>
+
+          <div class="sub-label">Closed-Loop Results</div>
+          <p class="body-text">Step-response testing on both axes after the IMU correction was applied, isolating discrete disturbance events to characterize settling behavior and confirm the correction held across repeated trials.</p>
+          <div class="img-row">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/results_yaw.png" alt="Yaw axis step response, 6 isolated disturbances, deflections from 1.0° to 11.8°" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/results_pitch.png" alt="Pitch axis step response, 8 isolated disturbances, deflections from 2.4° to 15.2°" onclick="openLb(this)">
+          </div>
+
+          <div class="pdf-links">
+            <button class="pdf-link" onclick="openPdf('https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/TVC_Engineering_Drawings.pdf')">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L18.5 9H14V4.5zM6 20V4h6v6h6v10H6z"/></svg>
+              Engineering Drawings (PDF)
+            </button>
+            <button class="pdf-link" onclick="openPdf('https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/TVC_Final_Report.pdf')">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L18.5 9H14V4.5zM6 20V4h6v6h6v10H6z"/></svg>
+              Final Report (PDF)
+            </button>
+          </div>
 
         </div>
       </div>
@@ -368,20 +559,22 @@
       <div class="proj-trigger" onclick="toggle('cortisol')">
         <div class="proj-index">02</div>
         <div>
-          <div class="proj-name">Cortisol Biosensor — MSc Thesis</div>
-          <p class="proj-summary">Designed and fabricated a molecularly imprinted polymer (MIP) based electrochemical biosensor for non-invasive cortisol detection in sweat and saliva. Validated across sensitivity, selectivity, and 23-day stability. Led to a first-author publication in Microchemical Journal (Elsevier, 2026).</p>
-          <div class="proj-tags-row">
-            <span class="ptag">Electrochemistry</span><span class="ptag">MIP Synthesis</span><span class="ptag">Cyclic Voltammetry</span>
-            <span class="ptag">Biosensing</span><span class="ptag">PalmSens4</span><span class="ptag">Published</span>
-          </div>
+          <div class="proj-name">Cortisol Biosensor: MSc Thesis</div>
+          <p class="proj-summary">A non-invasive electrochemical cortisol biosensor, published as first author in Microchemical Journal.</p>
         </div>
         <div class="proj-toggle">+</div>
       </div>
       <div class="proj-body">
         <div class="proj-body-inner">
 
+          <div class="proj-tags-row proj-tags-top">
+            <span class="ptag">Electrochemistry</span><span class="ptag">MIP Synthesis</span><span class="ptag">Cyclic Voltammetry</span>
+            <span class="ptag">Biosensing</span><span class="ptag">PalmSens4</span><span class="ptag">Published</span>
+            <button class="lb-share" onclick="event.stopPropagation(); shareProject('cortisol', this)">Share ↗</button>
+          </div>
+
           <div class="sub-label">Overview</div>
-          <p class="body-text">Cortisol is the primary biomarker of physiological stress and plays a central role in metabolic regulation, immune function, and circadian rhythm. Accurate real-time detection without invasive blood draws remains an unsolved clinical challenge. This project developed a molecularly imprinted polymer (MIP) based sensor on screen-printed carbon electrodes (SPCEs) that detects cortisol electrochemically from sweat or saliva at concentrations spanning 100 pM to 1 µM — a range clinically relevant to stress monitoring.</p>
+          <p class="body-text">Cortisol is the primary biomarker of physiological stress and plays a central role in metabolic regulation, immune function, and circadian rhythm. Accurate real-time detection without invasive blood draws remains an unsolved clinical challenge. This project developed a molecularly imprinted polymer (MIP) based sensor on screen-printed carbon electrodes (SPCEs) that detects cortisol electrochemically from sweat or saliva at concentrations spanning 100 pM to 1 µM, a range clinically relevant to stress monitoring.</p>
 
           <div class="img-row">
             <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/cortisol/PXL_20250612_131430196_NIGHT.jpg" alt="Sensor electropolymerization in solution" onclick="openLb(this)">
@@ -399,7 +592,7 @@
           </div>
 
           <div class="sub-label">Results</div>
-          <p class="body-text">The calibration curve achieved R²=0.992 across a 100 pM to 1 µM cortisol range with a logarithmic fit, confirming consistent sensor response across the clinically relevant detection window. Selectivity testing against structurally similar interferents — lactate, prednisolone, and progesterone — demonstrated that lactate produced negligible cross-response while steroid interferents showed measurable but distinguishable signals. SEM imaging confirmed distinct surface morphology differences between bare electrodes, NIP controls, and MIP-coated sensors.</p>
+          <p class="body-text">The calibration curve achieved R²=0.992 across a 100 pM to 1 µM cortisol range with a logarithmic fit, confirming consistent sensor response across the clinically relevant detection window. Selectivity testing against structurally similar interferents, lactate, prednisolone, and progesterone, demonstrated that lactate produced negligible cross-response while steroid interferents showed measurable but distinguishable signals. SEM imaging confirmed distinct surface morphology differences between bare electrodes, NIP controls, and MIP-coated sensors.</p>
 
           <div class="img-row">
             <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/cortisol/cal_curve_log.png" alt="Calibration curve log scale R²=0.992" onclick="openLb(this)">
@@ -414,13 +607,13 @@
 
           <div class="sub-label">Specifications</div>
           <table class="spec-table">
-            <tr><td>Recognition Element</td><td>Molecularly imprinted polypyrrole (MIP) — electropolymerized on SPCE</td></tr>
+            <tr><td>Recognition Element</td><td>Molecularly imprinted polypyrrole (MIP), electropolymerized on SPCE</td></tr>
             <tr><td>Detection Method</td><td>Cyclic Voltammetry (CV) and Differential Pulse Voltammetry (DPV)</td></tr>
             <tr><td>Detection Range</td><td>100 pM – 1 µM cortisol in aqueous buffer</td></tr>
-            <tr><td>Calibration Fit</td><td>Logarithmic — y = -3.019ln(x) + 337.5, R² = 0.992</td></tr>
+            <tr><td>Calibration Fit</td><td>Logarithmic: y = -3.019ln(x) + 337.5, R² = 0.992</td></tr>
             <tr><td>Instrument</td><td>PalmSens4 portable potentiostat</td></tr>
-            <tr><td>Electrode</td><td>Metrohm DropSens SPCE — carbon WE, carbon CE, Ag/AgCl RE</td></tr>
-            <tr><td>Publication</td><td>Microchemical Journal, 224, 117804 — Elsevier (2026)</td></tr>
+            <tr><td>Electrode</td><td>Metrohm DropSens SPCE, carbon WE, carbon CE, Ag/AgCl RE</td></tr>
+            <tr><td>Publication</td><td>Microchemical Journal, 224, 117804, Elsevier (2026)</td></tr>
           </table>
 
         </div>
@@ -433,19 +626,21 @@
         <div class="proj-index">06</div>
         <div>
           <div class="proj-name">PIV Fluid Dynamics Research</div>
-          <p class="proj-summary">Designed and built a complete Particle Image Velocimetry system from scratch to study laminar-to-turbulent flow transition. Validated against two independent theoretical benchmarks: Torricelli's Law (R²=0.958) and projectile motion theory (R²=0.985).</p>
-          <div class="proj-tags-row">
-            <span class="ptag">PIV / PIVlab</span><span class="ptag">MATLAB</span><span class="ptag">Fusion 360 CAD</span>
-            <span class="ptag">CNC Machining</span><span class="ptag">Laser Optics</span><span class="ptag">Fluid Dynamics</span>
-          </div>
+          <p class="proj-summary">A Particle Image Velocimetry system built from scratch to study fluid flow transition.</p>
         </div>
         <div class="proj-toggle">+</div>
       </div>
       <div class="proj-body">
         <div class="proj-body-inner">
 
+          <div class="proj-tags-row proj-tags-top">
+            <span class="ptag">PIV / PIVlab</span><span class="ptag">MATLAB</span><span class="ptag">Fusion 360 CAD</span>
+            <span class="ptag">CNC Machining</span><span class="ptag">Laser Optics</span><span class="ptag">Fluid Dynamics</span>
+            <button class="lb-share" onclick="event.stopPropagation(); shareProject('piv', this)">Share ↗</button>
+          </div>
+
           <div class="sub-label">Overview</div>
-          <p class="body-text">This undergraduate research project at Wisconsin Lutheran College developed a validated PIV measurement system for quantitative fluid flow analysis. The entire experimental apparatus — Torricelli panel, optical bench, tracer particle delivery — was designed in Fusion 360 and fabricated using CNC machining and laser cutting. PIVlab (MATLAB) was used for cross-correlation velocity extraction from 2,300 frames per run.</p>
+          <p class="body-text">This undergraduate research project at Wisconsin Lutheran College developed a validated PIV measurement system for quantitative fluid flow analysis. The entire experimental apparatus, Torricelli panel, optical bench, tracer particle delivery, was designed in Fusion 360 and fabricated using CNC machining and laser cutting. PIVlab (MATLAB) was used for cross-correlation velocity extraction from 2,300 frames per run.</p>
 
           <div class="two-col">
             <div>
@@ -461,7 +656,7 @@
             <div>
               <div class="sub-label" style="margin-top:0">Instrumentation</div>
               <ul class="bullet-list">
-                <li>LaserCube 2W 532 nm — knife-edge beam profiled</li>
+                <li>LaserCube 2W 532 nm, knife-edge beam profiled</li>
                 <li>Thorlabs optical mounts and precision alignment rails</li>
                 <li>DSLR high-speed capture for particle tracking</li>
                 <li>PIVlab (MATLAB) cross-correlation velocity extraction</li>
@@ -478,10 +673,10 @@
 
           <div class="sub-label">Specifications</div>
           <table class="spec-table">
-            <tr><td>Laser Source</td><td>LaserCube 2W — 532 nm DPSS, elliptical beam</td></tr>
+            <tr><td>Laser Source</td><td>LaserCube 2W, 532 nm DPSS, elliptical beam</td></tr>
             <tr><td>Analysis Software</td><td>PIVlab (MATLAB open-source cross-correlation PIV toolkit)</td></tr>
             <tr><td>Frame Statistics</td><td>2,300 frames per run; mean u = 0.0609 ± 0.089 m/s</td></tr>
-            <tr><td>Apparatus Material</td><td>Clear acrylic — CNC machined and laser cut</td></tr>
+            <tr><td>Apparatus Material</td><td>Clear acrylic, CNC machined and laser cut</td></tr>
             <tr><td>Theoretical Comparison</td><td>Torricelli's Law and projectile motion, both fitted to PIV data</td></tr>
           </table>
 
@@ -501,26 +696,28 @@
         <div class="proj-index">06</div>
         <div>
           <div class="proj-name">Self-Balancing Robot</div>
-          <p class="proj-summary">Two-wheeled inverted pendulum robot built from scratch — laser-cut chassis, 3D-printed wheels, NEMA 17 steppers, and a Kalman-filtered PID loop on Arduino. Achieved stable balance after three full redesigns and systematic resolution of cascading hardware and firmware failures.</p>
-          <div class="proj-tags-row">
-            <span class="ptag">Arduino / C++</span><span class="ptag">PID Control</span><span class="ptag">Kalman Filter</span>
-            <span class="ptag">MPU-6050</span><span class="ptag">NEMA 17 Steppers</span><span class="ptag">Laser Cut</span>
-          </div>
+          <p class="proj-summary">A self-balancing two-wheeled robot, stabilized with a Kalman-filtered PID loop.</p>
         </div>
         <div class="proj-toggle">+</div>
       </div>
       <div class="proj-body">
         <div class="proj-body-inner">
 
+          <div class="proj-tags-row proj-tags-top">
+            <span class="ptag">Arduino / C++</span><span class="ptag">PID Control</span><span class="ptag">Kalman Filter</span>
+            <span class="ptag">MPU-6050</span><span class="ptag">NEMA 17 Steppers</span><span class="ptag">Laser Cut</span>
+            <button class="lb-share" onclick="event.stopPropagation(); shareProject('slb', this)">Share ↗</button>
+          </div>
+
           <div class="sub-label">Overview</div>
           <p class="body-text">Built with a collaborator over an iterative series of sessions, this project pushed through three complete chassis redesigns and multiple hardware-level failures. The final build uses 2A NEMA 17 steppers driven by an Adafruit Motor Shield V2, a Kalman-filtered IMU for angle estimation, and a tuned PID controller (Kp=39.5, Ki=2.2, Kd=0.11) that achieves stable, repeatable balance. I²C was increased to 400 kHz to reduce motor latency below the control loop's stability threshold.</p>
 
           <div class="sub-label">Failures Overcome</div>
           <ul class="bullet-list">
-            <li>Initial 350mA steppers lacked torque — replaced with 2A NEMA 17s</li>
-            <li>PWM timing conflicts between motor library and IMU polling — resolved through interrupt restructuring</li>
-            <li>Asynchronous stepping caused resonance oscillation — fixed with coordinated step sequencing</li>
-            <li>I²C at 100 kHz introduced latency that destabilised PID — increased to 400 kHz</li>
+            <li>Initial 350mA steppers lacked torque, replaced with 2A NEMA 17s</li>
+            <li>PWM timing conflicts between motor library and IMU polling, resolved through interrupt restructuring</li>
+            <li>Asynchronous stepping caused resonance oscillation, fixed with coordinated step sequencing</li>
+            <li>I²C at 100 kHz introduced latency that destabilised PID, increased to 400 kHz</li>
           </ul>
 
           <div class="img-row">
@@ -531,9 +728,9 @@
 
           <div class="sub-label">Specifications</div>
           <table class="spec-table">
-            <tr><td>Controller</td><td>Arduino UNO — Kalman-filtered PID at 200 Hz loop rate</td></tr>
-            <tr><td>IMU</td><td>MPU-6050 — I²C 400 kHz, complementary + Kalman filter</td></tr>
-            <tr><td>Motors</td><td>2× NEMA 17 2A steppers — Adafruit Motor Shield V2</td></tr>
+            <tr><td>Controller</td><td>Arduino UNO, Kalman-filtered PID at 200 Hz loop rate</td></tr>
+            <tr><td>IMU</td><td>MPU-6050, I²C 400 kHz, complementary + Kalman filter</td></tr>
+            <tr><td>Motors</td><td>2× NEMA 17 2A steppers, Adafruit Motor Shield V2</td></tr>
             <tr><td>PID Gains</td><td>Kp = 39.5, Ki = 2.2, Kd = 0.11 (empirically tuned)</td></tr>
             <tr><td>Chassis</td><td>Laser-cut 1/4" plywood, 3D-printed wheels</td></tr>
           </table>
@@ -548,16 +745,18 @@
         <div class="proj-index">06</div>
         <div>
           <div class="proj-name">Quadcopter UAV</div>
-          <p class="proj-summary">Custom quadcopter built from components across mechanical, electrical, and firmware layers. Resolved layered hardware, RF interference, and firmware failures. Built a Python WiFi telemetry console for real-time in-flight PID tuning.</p>
-          <div class="proj-tags-row">
-            <span class="ptag">ESP32 / C</span><span class="ptag">ESP-IDF v4.4</span><span class="ptag">Brushless Motors</span>
-            <span class="ptag">BLHeli_S ESC</span><span class="ptag">Kalman Filter</span><span class="ptag">WiFi UDP</span>
-          </div>
+          <p class="proj-summary">A custom quadcopter with a Python telemetry console for real-time PID tuning.</p>
         </div>
         <div class="proj-toggle">+</div>
       </div>
       <div class="proj-body">
         <div class="proj-body-inner">
+
+          <div class="proj-tags-row proj-tags-top">
+            <span class="ptag">ESP32 / C</span><span class="ptag">ESP-IDF v4.4</span><span class="ptag">Brushless Motors</span>
+            <span class="ptag">BLHeli_S ESC</span><span class="ptag">Kalman Filter</span><span class="ptag">WiFi UDP</span>
+            <button class="lb-share" onclick="event.stopPropagation(); shareProject('quad', this)">Share ↗</button>
+          </div>
 
           <div class="sub-label">Overview</div>
           <p class="body-text">Built collaboratively around an ESP32-WROOM-32 flight controller, 4-in-1 BLHeli_S 30A ESC, and iFlight XING-E Pro 2306 brushless motors. The system required integration across mechanical, electrical, and software layers simultaneously. A key diagnostic challenge was the ADC2/WiFi co-interference on the ESP32, which required all PWM outputs to be mapped to ADC1 pins.</p>
@@ -571,16 +770,16 @@
             <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/quad/IMG_20230613_213519.jpg" alt="Extended arm configuration" onclick="openLb(this)">
           </div>
 
-          <div class="code-block"><pre>// Motor mixing — pitch + roll averaged per motor
+          <div class="code-block"><pre>// Motor mixing: pitch + roll averaged per motor
 M1_pwm = (M1_roll + M1_pitch) / 2;
 M2_pwm = (M2_roll + M2_pitch) / 2;
 
-// ADC2 disabled when WiFi active — all PWM on ADC1
+// ADC2 disabled when WiFi active, all PWM on ADC1
 // MBL_QTC: run in Python shell for live telemetry</pre></div>
 
           <a class="gh-link" href="https://github.com/CherryWookie/ESP32-Drone" target="_blank">
             <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            GitHub — CherryWookie/ESP32-Drone
+            GitHub: CherryWookie/ESP32-Drone
           </a>
 
         </div>
@@ -593,17 +792,20 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
         <div class="proj-index">06</div>
         <div>
           <div class="proj-name">Rubens' Tube</div>
-          <p class="proj-summary">Designed and fabricated a standing wave visualization apparatus from scratch. Applied fluid dynamics principles to achieve stable, repeatable flame patterns deployable across multiple resonant frequency modes — built as a lecture demonstration tool.</p>
-          <div class="proj-tags-row">
-            <span class="ptag">Acoustics</span><span class="ptag">Fluid Dynamics</span><span class="ptag">Fabrication</span><span class="ptag">Standing Waves</span>
-          </div>
+          <p class="proj-summary">A Rubens' tube built to visualize standing acoustic waves as flame patterns.</p>
         </div>
         <div class="proj-toggle">+</div>
       </div>
       <div class="proj-body">
         <div class="proj-body-inner">
+
+          <div class="proj-tags-row proj-tags-top">
+            <span class="ptag">Acoustics</span><span class="ptag">Fluid Dynamics</span><span class="ptag">Fabrication</span><span class="ptag">Standing Waves</span>
+            <button class="lb-share" onclick="event.stopPropagation(); shareProject('rubens', this)">Share ↗</button>
+          </div>
+
           <div class="sub-label">Concept</div>
-          <p class="body-text">A Rubens' tube demonstrates that standing acoustic waves produce stationary pressure nodes and antinodes. Flame height is proportional to local gas pressure amplitude — meaning the standing wave pattern becomes directly visible as a stable landscape of flame heights. By sweeping the drive frequency, multiple harmonics become observable as distinct, repeatable patterns. The tube was designed and fabricated to serve as a teaching instrument, optimising for stability and repeatability of the flame patterns rather than purely visual spectacle.</p>
+          <p class="body-text">A Rubens' tube demonstrates that standing acoustic waves produce stationary pressure nodes and antinodes. Flame height is proportional to local gas pressure amplitude, meaning the standing wave pattern becomes directly visible as a stable landscape of flame heights. By sweeping the drive frequency, multiple harmonics become observable as distinct, repeatable patterns. The tube was designed and fabricated to serve as a teaching instrument, optimising for stability and repeatability of the flame patterns rather than purely visual spectacle.</p>
 
           <div class="img-single">
             <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/rubens/IMG_20200225_143113.jpg" alt="Rubens tube standing wave flame pattern" onclick="openLb(this)">
@@ -620,11 +822,11 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
 <section class="section" id="construction">
   <div class="section-eyebrow">Construction and Fabrication</div>
   <h2 class="section-title">Built by<br><em>hand</em></h2>
-  <p style="font-size:0.9rem; color:var(--mid); max-width:560px; line-height:1.75; margin-bottom:52px;">Three years of residential and commercial remodeling — full guts, flooring, custom cabinetry, tile, electrical rough-in, and finish work. Every project managed end-to-end from design through delivery.</p>
+  <p style="font-size:0.9rem; color:var(--mid); max-width:560px; line-height:1.75; margin-bottom:52px;">Three years of residential and commercial remodeling: full guts, flooring, custom cabinetry, tile, electrical rough-in, and finish work. Every project managed end-to-end from design through delivery.</p>
 
   <div class="reveal">
 
-    <!-- PAIR 1 — FLOORING -->
+    <!-- PAIR 1 - FLOORING -->
     <div style="margin-bottom: 48px;">
       <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">Flooring · Full Room Gut and Reinstall</div>
       <div class="img-row">
@@ -639,7 +841,7 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
       </div>
     </div>
 
-    <!-- PAIR 2 — BATHROOM -->
+    <!-- PAIR 2 - BATHROOM -->
     <div style="margin-bottom: 48px;">
       <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">Bathroom · Full Gut and Tile</div>
       <div class="img-row">
@@ -654,7 +856,7 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
       </div>
     </div>
 
-    <!-- PAIR 3 — KITCHEN -->
+    <!-- PAIR 3 - KITCHEN -->
     <div style="margin-bottom: 48px;">
       <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">Kitchen · Cabinet Install and Finish</div>
       <div class="img-row">
@@ -669,7 +871,7 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
       </div>
     </div>
 
-    <!-- PAIR 4 — SPEAKER CABINET -->
+    <!-- PAIR 4 - SPEAKER CABINET -->
     <div>
       <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">Speaker Cabinet · Custom Wood Build</div>
       <div class="img-row">
@@ -692,7 +894,7 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
 <section class="section" id="sketchbook">
   <div class="section-eyebrow">Sketchbook</div>
   <h2 class="section-title">Drawn from<br><em>observation</em></h2>
-  <p style="font-size:0.9rem; color:var(--mid); max-width:560px; line-height:1.75; margin-bottom:40px;">Ink, watercolor, and pencil — from Barcelona streets drawn on location to scientific apparatus illustrations to figure studies. The same instinct that shows up in engineering notebook pages.</p>
+  <p style="font-size:0.9rem; color:var(--mid); max-width:560px; line-height:1.75; margin-bottom:40px;">Ink, watercolor, and pencil, from Barcelona streets drawn on location to scientific apparatus illustrations to figure studies. The same instinct that shows up in engineering notebook pages.</p>
 
   <div class="photo-grid reveal">
     <div class="photo-item">
@@ -734,7 +936,7 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
   </div>
 </section>
 
-<!-- PHOTO DIVIDER 1 — Pyrenees sunset -->
+<!-- PHOTO DIVIDER 1 - Pyrenees sunset -->
 <div class="photo-divider">
   <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/DSC02412.jpg" alt="Spain landscape">
   <div class="photo-divider-caption">Spain · 2024</div>
@@ -802,7 +1004,7 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
   </div>
 </section>
 
-<!-- PHOTO DIVIDER 2 — Barcelona -->
+<!-- PHOTO DIVIDER 2 - Barcelona -->
 <div class="photo-divider">
   <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/photo/bubble_film.png" alt="Barcelona evening">
   <div class="photo-divider-caption">Barcelona · 2024–2025</div>
@@ -834,9 +1036,9 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
 
     <!-- BIO -->
     <div class="about-text" style="padding-top: 4px;">
-      <p>I grew up taking things apart to understand how they worked — alarm clocks, computers, anything with moving parts. That instinct led me to physics, which forces you to build understanding from first principles rather than just applying formulas, and then to engineering, where that understanding becomes something physical you can hold.</p>
-      <p>I completed my MSc in Engineering Physics at the Universitat Politècnica de Catalunya in Barcelona, where I developed a molecularly imprinted polymer biosensor for non-invasive cortisol detection — work that led to a first-author publication in Microchemical Journal (Elsevier, 2026). Before that I spent four years at Wisconsin Lutheran College, where I simultaneously ran fluid dynamics research, taught AP Physics, and worked as a cabinet maker to fund my degree.</p>
-      <p>Outside of engineering I shoot with a Sony Alpha, play and compose music, and build things with friends — the quadcopter and self-balancing robot on this page were both collaborative projects born from curiosity rather than obligation. I lived in Barcelona for 18 months and speak Spanish fluently. I moved there on a one-way ticket and figured the rest out as I went.</p>
+      <p>I grew up taking things apart to understand how they worked: alarm clocks, computers, anything with moving parts. That instinct led me to physics, which forces you to build understanding from first principles rather than just applying formulas, and then to engineering, where that understanding becomes something physical you can hold.</p>
+      <p>I completed my MSc in Engineering Physics at the Universitat Politècnica de Catalunya in Barcelona, where I developed a molecularly imprinted polymer biosensor for non-invasive cortisol detection, work that led to a first-author publication in Microchemical Journal (Elsevier, 2026). Before that I spent four years at Wisconsin Lutheran College, where I simultaneously ran fluid dynamics research, taught AP Physics, and worked as a cabinet maker to fund my degree.</p>
+      <p>Outside of engineering I shoot with a Sony Alpha, play and compose music, and build things with friends. The quadcopter and self-balancing robot on this page were both collaborative projects born from curiosity rather than obligation. I lived in Barcelona for 18 months and speak Spanish fluently. I moved there on a one-way ticket and figured the rest out as I went.</p>
     </div>
   </div>
 
@@ -845,7 +1047,7 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
     <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--rule);">
       <div style="padding: 20px 24px; border-right: 1px solid var(--rule);">
         <div class="fact-label">Education</div>
-        <div class="fact-value">MSc Engineering Physics — UPC Barcelona (2025)<br>BS Physics — Wisconsin Lutheran College (2023)</div>
+        <div class="fact-value">MSc Engineering Physics, UPC Barcelona (2025)<br>BS Physics - Wisconsin Lutheran College (2023)</div>
       </div>
       <div style="padding: 20px 24px; border-right: 1px solid var(--rule);">
         <div class="fact-label">Publication</div>
@@ -919,27 +1121,139 @@ M2_pwm = (M2_roll + M2_pitch) / 2;
 </footer>
 
 <!-- LIGHTBOX -->
-<div id="lb" onclick="closeLb()">
-  <img id="lb-img" src="" alt="">
+<div id="lb">
+  <div class="lb-close" onclick="closeLb()">&times;</div>
+  <div id="lb-stage">
+    <div class="lb-arrow lb-prev" onclick="lbStep(-1)">&#8249;</div>
+    <img id="lb-img" src="" alt="">
+    <div class="lb-arrow lb-next" onclick="lbStep(1)">&#8250;</div>
+  </div>
+  <div id="lb-caption"></div>
+  <div id="lb-counter"></div>
+</div>
+
+<!-- PDF MODAL -->
+<div id="pdf-modal">
+  <div id="pdf-modal-bar">
+    <div class="lb-close" style="position:static;" onclick="closePdf()">&times;</div>
+  </div>
+  <iframe id="pdf-frame" src=""></iframe>
 </div>
 
 <script>
+  // ── MOBILE NAV ──
+  function toggleNav() {
+    const open = document.getElementById('nav-links').classList.toggle('open');
+    document.getElementById('nav-scrim').classList.toggle('open', open);
+    document.getElementById('nav-burger').classList.toggle('open', open);
+    document.getElementById('nav-burger').setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  function closeNav() {
+    document.getElementById('nav-links').classList.remove('open');
+    document.getElementById('nav-scrim').classList.remove('open');
+    document.getElementById('nav-burger').classList.remove('open');
+    document.getElementById('nav-burger').setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('#nav-links a').forEach(a => a.addEventListener('click', closeNav));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+
   function toggle(id) {
     const card = document.getElementById('card-' + id);
     const wasOpen = card.classList.contains('open');
     document.querySelectorAll('.proj-card').forEach(c => c.classList.remove('open'));
-    if (!wasOpen) card.classList.add('open');
+    if (!wasOpen) {
+      card.classList.add('open');
+      history.replaceState(null, '', '#card-' + id);
+      setTimeout(() => {
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 60);
+    }
   }
+
+  // ── LIGHTBOX: scoped to the images within the same project body ──
+  let lbGallery = [];
+  let lbIndex = 0;
+
   function openLb(img) {
-    document.getElementById('lb-img').src = img.src;
+    const scope = img.closest('.proj-body-inner') || img.closest('.photo-grid') || document;
+    lbGallery = Array.from(scope.querySelectorAll('img[onclick*="openLb"]'));
+    lbIndex = lbGallery.indexOf(img);
+    if (lbIndex === -1) { lbGallery = [img]; lbIndex = 0; }
+    renderLb();
     document.getElementById('lb').classList.add('active');
     document.body.style.overflow = 'hidden';
+  }
+  function renderLb() {
+    const img = lbGallery[lbIndex];
+    document.getElementById('lb-img').src = img.src;
+    document.getElementById('lb-caption').textContent = img.getAttribute('alt') || '';
+    const counter = document.getElementById('lb-counter');
+    if (lbGallery.length > 1) {
+      counter.textContent = (lbIndex + 1) + ' / ' + lbGallery.length;
+      counter.style.display = 'block';
+    } else {
+      counter.style.display = 'none';
+    }
+    document.querySelectorAll('.lb-arrow').forEach(a => a.style.display = lbGallery.length > 1 ? 'flex' : 'none');
+  }
+  function lbStep(dir) {
+    if (!lbGallery.length) return;
+    lbIndex = (lbIndex + dir + lbGallery.length) % lbGallery.length;
+    renderLb();
   }
   function closeLb() {
     document.getElementById('lb').classList.remove('active');
     document.body.style.overflow = '';
   }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+  document.getElementById('lb').addEventListener('click', e => {
+    if (e.target.id === 'lb' || e.target.id === 'lb-stage') closeLb();
+  });
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lb').classList.contains('active')) return;
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowLeft') lbStep(-1);
+    if (e.key === 'ArrowRight') lbStep(1);
+  });
+
+  // ── PDF MODAL ──
+  function openPdf(url) {
+    document.getElementById('pdf-frame').src = url;
+    document.getElementById('pdf-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePdf() {
+    document.getElementById('pdf-modal').classList.remove('active');
+    document.getElementById('pdf-frame').src = '';
+    document.body.style.overflow = '';
+  }
+
+  // ── SHAREABLE PROJECT LINKS ──
+  function shareProject(id, btn) {
+    const url = window.location.origin + window.location.pathname + '#card-' + id;
+    navigator.clipboard.writeText(url).then(() => {
+      const original = btn.textContent;
+      btn.textContent = 'Link copied';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = original; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+
+  // Auto-open + scroll to project if URL has a #card-x hash on load
+  function openFromHash() {
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#card-')) {
+      const card = document.querySelector(hash);
+      if (card && card.classList.contains('proj-card')) {
+        document.querySelectorAll('.proj-card').forEach(c => c.classList.remove('open'));
+        card.classList.add('open');
+        setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+      }
+    }
+  }
+  window.addEventListener('DOMContentLoaded', openFromHash);
+  window.addEventListener('hashchange', openFromHash);
 
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
