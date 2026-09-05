@@ -539,14 +539,14 @@
           </div>
 
           <div class="sub-label">Key Engineering Challenge</div>
-          <p class="body-text">During closed-loop testing, yaw and pitch axes showed asymmetric behavior that could not be explained by mechanical misalignment. Systematic analysis revealed the IMU mounting location, offset from the gimbal center at radius r = 0.0674 m, introduced centripetal acceleration (ω²r, mapped to X-axis) and tangential acceleration (αr, mapped to Z-axis) that corrupted the orientation estimate differently for each rotation axis. A physics-based correction was derived and implemented, with validation performed through a custom real-time oscilloscope dashboard that measured the noise floor before and after correction.</p>
+          <p class="body-text">During closed-loop testing, the pitch and yaw axes showed persistent asymmetric behavior: pitch settled roughly 3× slower than yaw and needed a different sensor-fusion tuning to stay stable. The first investigation pursued a physics-based explanation, deriving and implementing a correction for centripetal and tangential acceleration introduced by the IMU's off-center mounting, real effects, correctly derived, and measurably present. But a nagging contradiction remained: the fix that actually worked (trusting the accelerometer more on pitch) was the opposite of what that physics would predict. Chasing that contradiction rather than tuning around it led to the real cause: a single inverted sign on the pitch-axis gyroscope reading, a one-line firmware bug driving that axis's angle estimate the wrong direction on every control loop. Correcting it eliminated the asymmetry outright, both axes now run identical gains and filter parameters, with pitch settling in line with yaw.</p>
 
           <div class="sub-label">Specifications</div>
           <table class="spec-table">
-            <tr><td>Mechanism</td><td>2-DOF cardanic gimbal, ±12° deflection each axis</td></tr>
-            <tr><td>Actuation</td><td>2× servo motors with 3:1 mechanical advantage linkages</td></tr>
+            <tr><td>Mechanism</td><td>2-DOF cardanic gimbal, ±15° deflection each axis</td></tr>
+            <tr><td>Actuation</td><td>2× servo motors with 2:1 mechanical advantage linkages</td></tr>
             <tr><td>Controller</td><td>ESP32-WROOM-32, dual-core 240 MHz</td></tr>
-            <tr><td>IMU</td><td>MPU-6050, I²C 400 kHz, Kalman-filtered orientation</td></tr>
+            <tr><td>IMU</td><td>MPU-6050, I²C 400 kHz, complementary-filter fused orientation</td></tr>
             <tr><td>PCB</td><td>Custom round PCB, motor driver, power regulation, status LED</td></tr>
             <tr><td>CAD</td><td>Onshape, full parametric assembly, engineering drawings</td></tr>
             <tr><td>Status</td><td>Fabrication and closed-loop validation complete</td></tr>
@@ -562,11 +562,18 @@
 
 
           <div class="sub-label">Closed-Loop Results</div>
-          <p class="body-text">Step-response testing on both axes after the IMU correction was applied, isolating discrete disturbance events to characterize settling behavior and confirm the correction held across repeated trials.</p>
+          <p class="body-text">Step-response testing on both axes after the firmware sign fix, isolating discrete disturbance events to characterize settling behavior. Both axes now run identical gains and filter parameters, with pitch matching yaw's response time to within a few hundredths of a second, a direct confirmation that the asymmetry was a firmware defect and not a real property of either axis.</p>
           <div class="img-row">
-            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/results_yaw.png" alt="Yaw axis step response, 6 isolated disturbances, deflections from 1.0° to 11.8°" onclick="openLb(this)">
-            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/results_pitch.png" alt="Pitch axis step response, 8 isolated disturbances, deflections from 2.4° to 15.2°" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/results_yaw.png" alt="Yaw axis step response, 9 isolated disturbances, deflections from 5.5° to 12.2°" onclick="openLb(this)">
+            <img src="https://raw.githubusercontent.com/CherryWookie/CherryWookie.github.io/main/assets/tvc/results_pitch.png" alt="Pitch axis step response, 8 isolated disturbances, deflections from 4.5° to 8.3°" onclick="openLb(this)">
           </div>
+
+          <table class="spec-table">
+            <tr><td>Events settled</td><td>Yaw: 9/9 &nbsp;·&nbsp; Pitch: 8/8</td></tr>
+            <tr><td>Settling time (mean)</td><td>Yaw: 0.33 s &nbsp;·&nbsp; Pitch: 0.36 s</td></tr>
+            <tr><td>Overshoot (mean)</td><td>Yaw: 0.77° &nbsp;·&nbsp; Pitch: 1.05°</td></tr>
+            <tr><td>Steady-state error (mean)</td><td>Yaw: 0.70° &nbsp;·&nbsp; Pitch: 0.99°</td></tr>
+          </table>
 
 
         </div>
